@@ -6,7 +6,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 GoogleSignin.configure({
   webClientId:
-    '641162401214-0067k2ugjdhcg71p8afhmo27c67hmka3.apps.googleusercontent.com',
+    '##############.apps.googleusercontent.com',
 });
 
 const App = () => {
