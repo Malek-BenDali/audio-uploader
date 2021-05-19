@@ -12,15 +12,19 @@ const SignIn = () => {
     dispatch(signIn(user));
   }
 
-  const handleGoogleSignIn = () => {
-    googleSignIn();
-    auth().onAuthStateChanged(onAuthStateChanged);
+  const handleGoogleSignIn = async () => {
+    try {
+      await googleSignIn();
+      await auth().onAuthStateChanged(onAuthStateChanged);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <Button
       title="Google Sign-In"
-      onPress={async () => await handleGoogleSignIn()}
+      onPress={async () => handleGoogleSignIn().catch(err => console.log(err))}
     />
   );
 };
