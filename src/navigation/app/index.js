@@ -1,6 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from 'react-native-screens/native-stack';
-import {SignIn} from '../../screens/auth';
+import {Home} from '../../screens/app';
 
 const Stack = createNativeStackNavigator();
 
@@ -10,7 +10,7 @@ const authNavigation = () => (
       stackAnimation: 'slide_from_right',
       statusBarAnimation: 'slide',
     }}>
-    <Stack.Screen name="signIn" component={SignIn} />
+    <Stack.Screen name="Home" component={Home} />
     {/* <Stack.Screen name="SalonDetails" component={SalonDetails} /> */}
   </Stack.Navigator>
 );
