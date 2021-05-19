@@ -6,11 +6,11 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 GoogleSignin.configure({
   webClientId:
-    '452294585565-cma0bm3df6tbjeek76c4ead690pplhj3.apps.googleusercontent.com',
+    '641162401214-0067k2ugjdhcg71p8afhmo27c67hmka3.apps.googleusercontent.com',
 });
 
 const App = () => {
-  async function onGoogleButtonPress() {
+  const onGoogleButtonPress = async () => {
     try {
       // Get the users ID token
       const {idToken} = await GoogleSignin.signIn();
@@ -23,14 +23,16 @@ const App = () => {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
   // const audioRecorderPlayer = new AudioRecorderPlayer();
 
   return (
     <Button
       title="Google Sign-In"
       onPress={() =>
-        onGoogleButtonPress().then(() => console.log('Signed in with Google!'))
+        onGoogleButtonPress()
+          .then(() => console.log('Signed in with Google!'))
+          .catch(err => console.log(err))
       }
     />
   );
