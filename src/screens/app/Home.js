@@ -4,7 +4,6 @@ import {useSelector, useDispatch} from 'react-redux';
 import {logout} from '../../store/actions/authAction';
 import {HeaderButton} from '../../shared';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-import {BlurView} from '@react-native-community/blur';
 
 const Home = ({navigation}) => {
   useEffect(() => {
@@ -16,7 +15,7 @@ const Home = ({navigation}) => {
             title="Cart"
             iconName="person"
             onPress={() => {
-              navigation.navigate('Profile');
+              navigation.navigate('Profile', {userProfile: true});
             }}
           />
         </HeaderButtons>
@@ -30,7 +29,6 @@ const Home = ({navigation}) => {
           />
         </HeaderButtons>
       ),
-      headerTintColor: 'blue',
     });
   }, []);
   const user = useSelector(state => state.user);

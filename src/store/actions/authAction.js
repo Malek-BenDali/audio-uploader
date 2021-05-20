@@ -22,28 +22,64 @@ export const signIn = payload => {
       const {displayName, email, photoURL, uid} = payload;
       const account = await firestore().collection('Users').doc(uid).get();
       if (!account._exists) {
-        const sProfile = new Profile(
+        const profile = new Profile(
           uid,
           email,
           photoURL,
           displayName,
           Date.now(),
           Date.now(),
+          [],
+          [],
+          '',
+          [],
+          [],
         );
-        await firestore().collection('Users').doc(uid).set({
-          sProfile,
+        await firestore()
+          .collection('Users')
+          .doc(uid)
+          .set({
+            ...profile,
+          });
+        dispatch({
+          type: SIGN_UP,
+          payload: profile,
         });
-      } else
+      } else {
         await firestore().collection('Users').doc(uid).update({
           lastLogin: Date.now(),
         });
+        const {
+          email,
+          name,
+          photoURL,
+          createdAt,
+          followers,
+          following,
+          description,
+          interestedIn,
+          conversation,
+        } = account._data;
+        const profile = new Profile(
+          uid,
+          email,
+          photoURL,
+          name,
+          createdAt,
+          Date.now(),
+          followers,
+          following,
+          description,
+          interestedIn,
+          conversation,
+        );
+        dispatch({
+          type: SIGN_UP,
+          payload: profile,
+        });
+      }
     } catch (err) {
       console.log(err);
     }
-
-    dispatch({
-      type: SIGN_UP,
-      payload,
-    });
   };
 };
