@@ -2,6 +2,7 @@ import * as actionTypes from '../actions/TYPES';
 
 const initialState = {
   isSignedIn: false,
+  loading: false,
   uid: null,
   email: '',
   photoURL: '',
@@ -34,6 +35,7 @@ export default (state = initialState, action) => {
         } = action.payload;
         return {
           ...state,
+          loading: false,
           isSignedIn: true,
           uid,
           email,
@@ -51,6 +53,7 @@ export default (state = initialState, action) => {
     case actionTypes.LOGOUT:
       return {
         ...state,
+        loading: false,
         isSignedIn: false,
         uid: null,
         email: '',
@@ -64,7 +67,13 @@ export default (state = initialState, action) => {
         interestedIn: null,
         conversation: null,
       };
+    case actionTypes.START_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
     default:
-      return state;
+      return {...state, loading: false};
   }
 };

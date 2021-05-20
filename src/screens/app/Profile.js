@@ -41,11 +41,16 @@ const Profile = ({navigation, route}) => {
   }, []);
   return (
     <View style={styles.container}>
-      <Modal visible={openImage} animationType="slide" transparent={true}>
-        <View
-          style={{flex: 1, backgroundColor: 'black', justifyContent: 'center'}}>
+      <Modal
+        visible={openImage}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => {
+          setOpenImage(false);
+        }}>
+        <View style={styles.imageBackground}>
           <Pressable
-            style={{position: 'absolute', top: 15, right: 15}}
+            style={styles.closeImage}
             onPress={() => setOpenImage(false)}>
             <Ionicons name="close" size={30} color={colors.white} />
           </Pressable>
@@ -104,6 +109,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.primary,
   },
+  imageBackground: {
+    flex: 1,
+    backgroundColor: 'black',
+    justifyContent: 'center',
+  },
+  closeImage: {position: 'absolute', top: 15, right: 15},
   header: {
     height: height * 0.25,
     // backgroundColor: 'red',

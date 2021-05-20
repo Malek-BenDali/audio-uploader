@@ -1,24 +1,32 @@
-import {SIGN_UP, LOGOUT} from './TYPES';
+import {SIGN_UP, LOGOUT, START_REQUEST} from './TYPES';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import Profile from '../../models/Profile';
 
 export const logout = () => {
   return dispatch => {
-    auth()
-      .signOut()
-      .then(() => console.log('User signed out!'))
+    // dispatch({
+    //   type: START_REQUEST,
+    // });
+    try {
+      auth().signOut();
+    } catch (err) {
       //check here
-      .catch(err => console.log(err));
-    dispatch({
-      type: LOGOUT,
-    });
+      console.log(err);
+    } finally {
+      dispatch({
+        type: LOGOUT,
+      });
+    }
   };
 };
 
 export const signIn = payload => {
   return async dispatch => {
     try {
+      dispatch({
+        type: START_REQUEST,
+      });
       const {displayName, email, photoURL, uid} = payload;
       const account = await firestore().collection('Users').doc(uid).get();
       if (!account._exists) {

@@ -1,11 +1,14 @@
 import React from 'react';
-import {StyleSheet, Text, View, Button} from 'react-native';
+import {StyleSheet, ActivityIndicator, Button} from 'react-native';
 import {googleSignIn} from '../../api/google/authApi';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import {signIn} from '../../store/actions/authAction';
+import {colors} from '../../assets';
 
 const SignIn = () => {
+  const loading = useSelector(state => state.user.loading);
+  console.log('loading', loading);
   const dispatch = useDispatch();
 
   function onAuthStateChanged(user) {
@@ -27,6 +30,9 @@ const SignIn = () => {
       onPress={async () => handleGoogleSignIn().catch(err => console.log(err))}
     />
   );
+  // loading ? (
+  //   <ActivityIndicator size="large" color={colors.primary} />
+  // ) :
 };
 
 export default SignIn;
