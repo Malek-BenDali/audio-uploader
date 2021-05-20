@@ -15,7 +15,7 @@ const SignIn = () => {
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn();
-      await auth().onAuthStateChanged(onAuthStateChanged);
+      auth().onAuthStateChanged(onAuthStateChanged);
     } catch (err) {
       console.log(err);
     }

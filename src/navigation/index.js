@@ -7,7 +7,6 @@ import {useSelector} from 'react-redux';
 
 export default () => {
   const user = useSelector(state => state.user);
-  console.log(user.isSignedIn);
   return (
     <NavigationContainer>
       {user.isSignedIn ? <App /> : <Auth />}
