@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "641162401214",
+    "firebase_url": "https://audio-chat-project-default-rtdb.europe-west1.firebasedatabase.app/",
     "project_id": "audio-chat-project",
     "storage_bucket": "audio-chat-project.appspot.com"
   },
