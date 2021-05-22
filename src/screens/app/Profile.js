@@ -61,7 +61,6 @@ const Profile = ({navigation, route}) => {
         dispatch(updateFollow({followers, following}));
         setUser({...user, followers, following});
       });
-    console.log(user.followers);
     // Stop listening for updates when no longer required
     return () => subscriber();
   }, [userData.followers, userData.following]);

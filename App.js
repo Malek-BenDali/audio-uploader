@@ -13,7 +13,6 @@ const App = () => (
   </Provider>
 );
 //   <PersistGate loading={null} persistor={persistor}>
-{
-  /* </PersistGate>*/
-}
+// </PersistGate>
+
 export default App;
