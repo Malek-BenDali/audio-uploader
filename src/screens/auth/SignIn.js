@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import {signIn} from '../../store/actions/authAction';
 import messaging from '@react-native-firebase/messaging';
-// import database from '@react-native-firebase/database';
+import database from '@react-native-firebase/database';
 
 const SignIn = () => {
   useEffect(() => {

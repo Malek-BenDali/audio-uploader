@@ -1,3 +1,4 @@
 import HeaderButton from './UI/HeaderButton';
+import Notifications from './Notifications';
 
-export {HeaderButton};
+export {HeaderButton, Notifications};
