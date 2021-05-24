@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {HeaderButton} from '../../shared';
-import firestore from '@react-native-firebase/firestore';
 import {
   StyleSheet,
   Text,
@@ -16,30 +15,13 @@ import {colors} from '../../assets';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import {useSelector} from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {useDispatch} from 'react-redux';
-import {updateFollow} from '../../store/actions/socialAction';
 
 const Profile = ({navigation, route}) => {
   const [openImage, setOpenImage] = useState(false);
-  const uid = useSelector(state => state.user.uid);
   const {photoURL, name, email, following, followers} = useSelector(
     state => state.user,
   );
-
-  // const [user, setUser] = useState({
-  // photoURL: userData.photoURL,
-  // name: userData.name,
-  // email: userData.email,
-  //   following: userData.following,
-  //   followers: userData.followers,
-  // });
-  // const {photoURL, name, email, followers, following} = user;
-  const dispatch = useDispatch();
   const userProfile = route.params !== undefined;
-
-  // useEffect(() => {
-  //   console.log('followers ', followers, '  ', following);
-  // }, [followers, following]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -59,18 +41,6 @@ const Profile = ({navigation, route}) => {
     });
   }, []);
 
-  useEffect(() => {
-    const subscriber = firestore()
-      .collection('Users')
-      .doc(uid)
-      .onSnapshot(documentSnapshot => {
-        const {following, followers} = documentSnapshot.data();
-        dispatch(updateFollow({followers, following}));
-        // setUser({...user, followers, following});
-      });
-    // Stop listening for updates when no longer required
-    return () => subscriber();
-  }, [uid]);
   return (
     <View style={styles.container}>
       <Modal

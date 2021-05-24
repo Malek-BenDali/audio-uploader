@@ -1,14 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import Auth from './auth';
 import App from './app';
 import {useSelector} from 'react-redux';
 
 export default () => {
-  const user = useSelector(state => state.user);
+  const {isSignedIn} = useSelector(state => state.user);
+
   return (
-    <NavigationContainer>
-      {user.isSignedIn ? <App /> : <Auth />}
-    </NavigationContainer>
+    <NavigationContainer>{isSignedIn ? <App /> : <Auth />}</NavigationContainer>
   );
 };

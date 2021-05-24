@@ -73,10 +73,15 @@ export default (state = initialState, action) => {
         loading: true,
       };
     }
-    case actionTypes.UPDATE_FOLLOW: {
+    case actionTypes.UPDATE_FOLLOWER: {
       return {
         ...state,
         followers: action.payload.followers,
+      };
+    }
+    case actionTypes.UPDATE_FOLLOWGIN: {
+      return {
+        ...state,
         following: action.payload.following,
       };
     }
