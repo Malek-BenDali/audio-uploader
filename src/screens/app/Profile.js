@@ -22,17 +22,24 @@ import {updateFollow} from '../../store/actions/socialAction';
 const Profile = ({navigation, route}) => {
   const [openImage, setOpenImage] = useState(false);
   const uid = useSelector(state => state.user.uid);
-  const userData = useSelector(state => state.user);
-  const [user, setUser] = useState({
-    photoURL: userData.photoURL,
-    name: userData.name,
-    email: userData.email,
-    following: userData.following,
-    followers: userData.followers,
-  });
-  const {photoURL, name, email, followers, following} = user;
+  const {photoURL, name, email, following, followers} = useSelector(
+    state => state.user,
+  );
+
+  // const [user, setUser] = useState({
+  // photoURL: userData.photoURL,
+  // name: userData.name,
+  // email: userData.email,
+  //   following: userData.following,
+  //   followers: userData.followers,
+  // });
+  // const {photoURL, name, email, followers, following} = user;
   const dispatch = useDispatch();
   const userProfile = route.params !== undefined;
+
+  // useEffect(() => {
+  //   console.log('followers ', followers, '  ', following);
+  // }, [followers, following]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -59,11 +66,11 @@ const Profile = ({navigation, route}) => {
       .onSnapshot(documentSnapshot => {
         const {following, followers} = documentSnapshot.data();
         dispatch(updateFollow({followers, following}));
-        setUser({...user, followers, following});
+        // setUser({...user, followers, following});
       });
     // Stop listening for updates when no longer required
     return () => subscriber();
-  }, [userData.followers, userData.following]);
+  }, [uid]);
   return (
     <View style={styles.container}>
       <Modal
@@ -108,11 +115,11 @@ const Profile = ({navigation, route}) => {
           </View>
           <View style={styles.headerBottom}>
             <View style={styles.box}>
-              <Text style={styles.text}>{followers.length}</Text>
+              <Text style={styles.text}>{followers?.length}</Text>
               <Text style={styles.text}>Followers</Text>
             </View>
             <View style={styles.box}>
-              <Text style={styles.text}>{following.length} </Text>
+              <Text style={styles.text}>{following?.length} </Text>
               <Text style={styles.text}>Followers</Text>
             </View>
           </View>

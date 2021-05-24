@@ -76,8 +76,8 @@ export default (state = initialState, action) => {
     case actionTypes.UPDATE_FOLLOW: {
       return {
         ...state,
-        followers: action.followers,
-        following: action.following,
+        followers: action.payload.followers,
+        following: action.payload.following,
       };
     }
     default:
