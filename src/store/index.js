@@ -1,7 +1,7 @@
 import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
 import thunk from 'redux-thunk';
 import {authReducer, socialReducer} from './reducers';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {persistReducer, persistStore} from 'redux-persist';
 import PushNotification, {Importance} from 'react-native-push-notification';
 
