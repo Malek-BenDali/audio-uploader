@@ -10,6 +10,7 @@ import {
   Modal,
   StatusBar,
   Pressable,
+  TouchableOpacity,
 } from 'react-native';
 import {colors} from '../../assets';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
@@ -84,14 +85,18 @@ const Profile = ({navigation, route}) => {
             </View>
           </View>
           <View style={styles.headerBottom}>
-            <View style={styles.box}>
+            <TouchableOpacity
+              style={styles.box}
+              onPress={() => navigation.navigate('Follow')}>
               <Text style={styles.text}>{followers?.length}</Text>
               <Text style={styles.text}>Followers</Text>
-            </View>
-            <View style={styles.box}>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.box}
+              onPress={() => navigation.navigate('Follow')}>
               <Text style={styles.text}>{following?.length} </Text>
               <Text style={styles.text}>Followers</Text>
-            </View>
+            </TouchableOpacity>
           </View>
         </View>
 

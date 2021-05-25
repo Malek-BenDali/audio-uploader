@@ -7,6 +7,7 @@ import {
   updateFollowing,
 } from '../../store/actions/socialAction';
 import {useSelector, useDispatch} from 'react-redux';
+import Follow from './Follow';
 
 const Stack = createNativeStackNavigator();
 
@@ -53,6 +54,7 @@ const authNavigation = () => {
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="EditProfile" component={EditProfile} />
+      <Stack.Screen name="Follow" component={Follow} />
     </Stack.Navigator>
   );
 };

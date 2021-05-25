@@ -1,5 +1,4 @@
 import PushNotification from 'react-native-push-notification';
-
 export const newFollower = (
   title = 'name',
   message = 'message',
@@ -10,5 +9,6 @@ export const newFollower = (
     message,
     largeIconUrl,
     channelId: '123',
+    invokeApp: true,
   });
 };

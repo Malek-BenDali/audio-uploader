@@ -15,7 +15,6 @@ const persistStateReducer = persistReducer(persistConfig, reducers);
 
 const store = createStore(persistStateReducer, compose(applyMiddleware(thunk)));
 const persistor = persistStore(store);
-console.log(reducers);
 
 PushNotification.configure({
   onRegister: function (token) {
