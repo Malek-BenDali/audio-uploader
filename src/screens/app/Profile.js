@@ -87,13 +87,17 @@ const Profile = ({navigation, route}) => {
           <View style={styles.headerBottom}>
             <TouchableOpacity
               style={styles.box}
-              onPress={() => navigation.navigate('Follow')}>
+              onPress={() =>
+                navigation.navigate('Follow', {screen: 'Followers'})
+              }>
               <Text style={styles.text}>{followers?.length}</Text>
               <Text style={styles.text}>Followers</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.box}
-              onPress={() => navigation.navigate('Follow')}>
+              onPress={() =>
+                navigation.navigate('Follow', {screen: 'Following'})
+              }>
               <Text style={styles.text}>{following?.length} </Text>
               <Text style={styles.text}>Followers</Text>
             </TouchableOpacity>

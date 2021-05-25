@@ -9,11 +9,12 @@ const initialState = {
   name: '',
   createdAt: '',
   lastLogin: '',
-  followers: null,
-  following: null,
+  followers: [],
+  following: [],
   description: '',
-  interestedIn: null,
-  conversation: null,
+  interestedIn: [],
+  conversation: [],
+  notifications: [],
 };
 
 export default (state = initialState, action) => {
@@ -32,6 +33,7 @@ export default (state = initialState, action) => {
           description,
           interestedIn,
           conversation,
+          notifications,
         } = action.payload;
         return {
           ...state,
@@ -48,6 +50,7 @@ export default (state = initialState, action) => {
           description,
           interestedIn,
           conversation,
+          notifications,
         };
       }
     case actionTypes.LOGOUT:

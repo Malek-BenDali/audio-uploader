@@ -8,27 +8,18 @@ import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 const Home = ({navigation}) => {
   useEffect(() => {
     navigation.setOptions({
-      headerCenter: () => <Text>Home</Text>,
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item title="Cart" iconName="add-circle-outline" onPress={() => {}} />
           <Item
-            title="Cart"
-            iconName="person"
-            onPress={() => {
-              navigation.navigate('Profile', {userProfile: true});
-            }}
-          />
-        </HeaderButtons>
-      ),
-      headerLeft: () => (
-        <HeaderButtons HeaderButtonComponent={HeaderButton}>
-          <Item
-            title="Cart"
-            iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
+            title="Add"
+            iconName="ios-notifications-circle-outline"
             onPress={() => {}}
           />
         </HeaderButtons>
       ),
+      headerTitleStyle: {fontFamily: 'Roboto-Bold'},
+      title: 'MaleksAPP',
     });
   }, []);
   const user = useSelector(state => state.user);

@@ -42,6 +42,7 @@ export const signIn = payload => {
           '',
           [],
           [],
+          [],
         );
         await firestore()
           .collection('Users')
@@ -67,6 +68,7 @@ export const signIn = payload => {
           description,
           interestedIn,
           conversation,
+          notifications,
         } = account._data;
         const profile = new Profile(
           uid,
@@ -80,6 +82,7 @@ export const signIn = payload => {
           description,
           interestedIn,
           conversation,
+          notifications,
         );
         dispatch({
           type: SIGN_UP,

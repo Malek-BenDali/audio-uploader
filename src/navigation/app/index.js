@@ -1,18 +1,22 @@
 import React, {useEffect} from 'react';
-import {createNativeStackNavigator} from 'react-native-screens/native-stack';
-import {Home, Profile, EditProfile} from '../../screens/app';
 import firestore from '@react-native-firebase/firestore';
 import {
   updateFollowers,
   updateFollowing,
 } from '../../store/actions/socialAction';
 import {useSelector, useDispatch} from 'react-redux';
-import Follow from './Follow';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {colors} from '../../assets';
+import ProfileTab from './ProfileTab';
+import HomeTab from './HomeTab';
 
-const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const authNavigation = () => {
-  const {uid, followers, following} = useSelector(state => state.user);
+  const {uid, followers, following, notifications} = useSelector(
+    state => state.user,
+  );
   const dispatch = useDispatch();
   useEffect(() => {
     const subscriber = firestore()
@@ -20,15 +24,19 @@ const authNavigation = () => {
       .doc(uid)
       .onSnapshot(documentSnapshot => {
         const newUserData = documentSnapshot.data();
-        if (newUserData?.followers.length != followers.length)
+        if (newUserData?.followers.length != followers.length) {
           dispatch(
             updateFollowers({
               followers: newUserData.followers,
+              uid,
             }),
           );
+          console.log('called');
+        }
       });
+
     return () => subscriber();
-  }, [uid]);
+  }, [followers]);
 
   useEffect(() => {
     const subscriber = firestore()
@@ -39,23 +47,43 @@ const authNavigation = () => {
         if (newUserData?.following.length != following.length)
           dispatch(
             updateFollowing({
+              notifications,
+              uid,
               following: newUserData.following,
             }),
           );
       });
     return () => subscriber();
-  }, [uid]);
+  }, [following]);
   return (
-    <Stack.Navigator
-      screenOptions={{
-        stackAnimation: 'slide_from_right',
-        statusBarAnimation: 'slide',
-      }}>
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="EditProfile" component={EditProfile} />
-      <Stack.Screen name="Follow" component={Follow} />
-    </Stack.Navigator>
+    <Tab.Navigator>
+      <Tab.Screen
+        name="Home"
+        options={{
+          tabBarIcon: ({focused}) => (
+            <Ionicons
+              name={focused ? 'home' : 'home-outline'}
+              size={focused ? 35 : 25}
+              color={colors.primary}
+            />
+          ),
+        }}
+        component={HomeTab}
+      />
+      <Tab.Screen
+        name="ProfileTab"
+        options={{
+          tabBarIcon: ({focused}) => (
+            <Ionicons
+              name={focused ? 'person-circle-sharp' : 'person-circle-outline'}
+              size={focused ? 35 : 25}
+              color={colors.primary}
+            />
+          ),
+        }}
+        component={ProfileTab}
+      />
+    </Tab.Navigator>
   );
 };
 

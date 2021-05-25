@@ -11,6 +11,7 @@ class Profile {
     description,
     interestedIn,
     conversation,
+    notifications,
   ) {
     this.uid = uid;
     this.email = email;
@@ -23,6 +24,7 @@ class Profile {
     this.description = description;
     this.interestedIn = interestedIn;
     this.conversation = conversation;
+    this.notifications = notifications;
   }
 }
 export default Profile;
