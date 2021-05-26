@@ -1,6 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from 'react-native-screens/native-stack';
-import {Profile, EditProfile} from '../../screens/app';
+import {Profile, EditProfile} from '../../../screens/app';
 import Follow from './Follow';
 const Stack = createNativeStackNavigator();
 const ProfileTab = () => (
@@ -15,4 +15,4 @@ const ProfileTab = () => (
   </Stack.Navigator>
 );
 
-export default ProfileTab;
+export {ProfileTab};

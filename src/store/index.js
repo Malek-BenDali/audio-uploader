@@ -20,9 +20,8 @@ PushNotification.configure({
   onRegister: function (token) {
     console.log('TOKEN:', token);
   },
-  onNotification: function (notification) {
-    console.log('NOTIFICATION:', notification);
-    notification.finish(PushNotificationIOS.FetchResult.NoData);
+  onNotification: function () {
+    PushNotification.removeAllDeliveredNotifications();
   },
   onAction: function (notification) {
     console.log('ACTION:', notification.action);

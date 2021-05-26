@@ -8,8 +8,8 @@ import {useSelector, useDispatch} from 'react-redux';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {colors} from '../../assets';
-import ProfileTab from './ProfileTab';
-import HomeTab from './HomeTab';
+import {ProfileTab} from './Profile';
+import {HomeTab} from './Home';
 
 const Tab = createBottomTabNavigator();
 
@@ -56,7 +56,7 @@ const authNavigation = () => {
     return () => subscriber();
   }, [following]);
   return (
-    <Tab.Navigator>
+    <Tab.Navigator tabBarOptions={{showLabel: false}}>
       <Tab.Screen
         name="Home"
         options={{
@@ -70,6 +70,7 @@ const authNavigation = () => {
         }}
         component={HomeTab}
       />
+
       <Tab.Screen
         name="ProfileTab"
         options={{

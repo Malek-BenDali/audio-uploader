@@ -28,7 +28,6 @@ const Profile = ({navigation, route}) => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: name,
       headerRight: () =>
         !userProfile && (
           <HeaderButtons HeaderButtonComponent={HeaderButton}>
@@ -51,6 +50,12 @@ const Profile = ({navigation, route}) => {
         .then(doc => setUser(doc._data));
     }
   }, []);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: user.name,
+    });
+  }, [user.name]);
 
   return (
     <View style={styles.container}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {Followers, Following} from '../../screens/app/Follow';
+import {Followers, Following} from '../../../screens/app/Follow';
 
 const Tab = createMaterialTopTabNavigator();
 

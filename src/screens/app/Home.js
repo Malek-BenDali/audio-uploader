@@ -4,18 +4,19 @@ import {useSelector, useDispatch} from 'react-redux';
 import {logout} from '../../store/actions/authAction';
 import {HeaderButton} from '../../shared';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import {colors} from '../../assets';
 
 const Home = ({navigation}) => {
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
-          <Item title="Cart" iconName="add-circle-outline" onPress={() => {}} />
           <Item
-            title="Add"
-            iconName="ios-notifications-circle-outline"
+            title="Cart"
+            iconName="search-circle-outline"
             onPress={() => {}}
           />
+          <Item title="Add" iconName="add-circle-outline" onPress={() => {}} />
         </HeaderButtons>
       ),
       headerTitleStyle: {fontFamily: 'Roboto-Bold'},
@@ -25,7 +26,7 @@ const Home = ({navigation}) => {
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
   return (
-    <View style={{flex: 1, backgroundColor: '#9eecff'}}>
+    <View style={styles.container}>
       <Text>Hello {user.name} </Text>
       <Button
         title="logout"
@@ -39,4 +40,6 @@ const Home = ({navigation}) => {
 
 export default Home;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {flex: 1, backgroundColor: colors.white},
+});
