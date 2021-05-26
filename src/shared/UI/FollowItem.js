@@ -8,7 +8,7 @@ const FollowItem = ({item}) => {
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => navigation.navigate('Profile', {uid: item.uid})}>
+      onPress={() => navigation.push('Profile', {uid: item.uid})}>
       <Image
         source={{
           uri: item.photoURL,

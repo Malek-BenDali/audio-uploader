@@ -16,19 +16,21 @@ import {colors} from '../../assets';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import {useSelector} from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import firestore from '@react-native-firebase/firestore';
 
 const Profile = ({navigation, route}) => {
   const [openImage, setOpenImage] = useState(false);
+  const [user, setUser] = useState({});
   const {photoURL, name, email, following, followers} = useSelector(
     state => state.user,
   );
-  const userProfile = route.params !== undefined;
+  const userProfile = route.params;
 
   useEffect(() => {
     navigation.setOptions({
       headerTitle: name,
       headerRight: () =>
-        userProfile && (
+        !userProfile && (
           <HeaderButtons HeaderButtonComponent={HeaderButton}>
             <Item
               title="settings"
@@ -40,6 +42,14 @@ const Profile = ({navigation, route}) => {
           </HeaderButtons>
         ),
     });
+    if (userProfile !== undefined) {
+      console.log('fucked one last time');
+      firestore()
+        .collection('Users')
+        .doc(userProfile.uid)
+        .get()
+        .then(doc => setUser(doc._data));
+    }
   }, []);
 
   return (
@@ -60,7 +70,7 @@ const Profile = ({navigation, route}) => {
           <StatusBar backgroundColor="black" />
           <Image
             source={{
-              uri: photoURL,
+              uri: !userProfile ? photoURL : user?.photoURL,
             }}
             style={{width, height: width}}
           />
@@ -74,31 +84,35 @@ const Profile = ({navigation, route}) => {
             <Pressable onPress={() => setOpenImage(true)}>
               <Image
                 source={{
-                  uri: photoURL,
+                  uri: !userProfile ? photoURL : user?.photoURL,
                 }}
                 style={styles.image}
               />
             </Pressable>
             <View style={styles.headerTopInfo}>
-              <Text style={[styles.userName, styles.text]}>{name}</Text>
-              <Text style={[styles.userEmail, styles.text]}>{email}</Text>
+              <Text style={[styles.userName, styles.text]}>
+                {!userProfile ? name : user?.name}
+              </Text>
+              <Text style={[styles.userEmail, styles.text]}>
+                {!userProfile ? email : user?.email}
+              </Text>
             </View>
           </View>
           <View style={styles.headerBottom}>
             <TouchableOpacity
               style={styles.box}
-              onPress={() =>
-                navigation.navigate('Follow', {screen: 'Followers'})
-              }>
-              <Text style={styles.text}>{followers?.length}</Text>
+              onPress={() => navigation.push('Follow', {screen: 'Followers'})}>
+              <Text style={styles.text}>
+                {!userProfile ? followers?.length : user?.followers?.length}
+              </Text>
               <Text style={styles.text}>Followers</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.box}
-              onPress={() =>
-                navigation.navigate('Follow', {screen: 'Following'})
-              }>
-              <Text style={styles.text}>{following?.length} </Text>
+              onPress={() => navigation.push('Follow', {screen: 'Following'})}>
+              <Text style={styles.text}>
+                {!userProfile ? following?.length : user?.following?.length}{' '}
+              </Text>
               <Text style={styles.text}>Following</Text>
             </TouchableOpacity>
           </View>
