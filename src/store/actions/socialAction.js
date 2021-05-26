@@ -11,20 +11,20 @@ export const updateFollowers = payload => {
         .doc(payload.followers[payload.followers.length - 1])
         .get();
       const {name, photoURL} = followerDetails._data;
-      const newNotification = new Notification(
-        name,
-        'a commancer à vous suivre',
-        photoURL,
-        Date.now(),
-        followerDetails._data.uid,
-        payload.uid,
-        false,
-      );
-      const a = await firestore()
-        .collection(`Notifications`)
-        .add({
-          ...newNotification,
-        });
+      // const newNotification = new Notification(
+      //   name,
+      //   'a commancer à vous suivre',
+      //   photoURL,
+      //   Date.now(),
+      //   followerDetails._data.uid,
+      //   payload.uid,
+      //   false,
+      // );
+      // const a = await firestore()
+      //   .collection(`Notifications`)
+      //   .add({
+      //     ...newNotification,
+      //   });
       // dispatch({
       //   type : UPDATE_NOTIFICATIONS,
       //   payload : { uid : a.id}

@@ -99,7 +99,7 @@ const Profile = ({navigation, route}) => {
                 navigation.navigate('Follow', {screen: 'Following'})
               }>
               <Text style={styles.text}>{following?.length} </Text>
-              <Text style={styles.text}>Followers</Text>
+              <Text style={styles.text}>Following</Text>
             </TouchableOpacity>
           </View>
         </View>

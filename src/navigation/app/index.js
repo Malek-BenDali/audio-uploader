@@ -27,7 +27,7 @@ const authNavigation = () => {
         if (newUserData?.followers.length != followers.length) {
           dispatch(
             updateFollowers({
-              followers: newUserData.followers,
+              followers: newUserData?.followers,
               uid,
             }),
           );
@@ -49,7 +49,7 @@ const authNavigation = () => {
             updateFollowing({
               notifications,
               uid,
-              following: newUserData.following,
+              following: newUserData?.following,
             }),
           );
       });
