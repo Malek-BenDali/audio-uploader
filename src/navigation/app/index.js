@@ -24,14 +24,13 @@ const authNavigation = () => {
       .doc(uid)
       .onSnapshot(documentSnapshot => {
         const newUserData = documentSnapshot.data();
-        if (newUserData?.followers.length != followers.length) {
+        if (newUserData?.followers?.length != followers?.length) {
           dispatch(
             updateFollowers({
               followers: newUserData?.followers,
               uid,
             }),
           );
-          console.log('called');
         }
       });
 

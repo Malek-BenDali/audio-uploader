@@ -14,7 +14,9 @@ const Home = ({navigation}) => {
           <Item
             title="Cart"
             iconName="search-circle-outline"
-            onPress={() => {}}
+            onPress={() => {
+              navigation.navigate('Search');
+            }}
           />
           <Item title="Add" iconName="add-circle-outline" onPress={() => {}} />
         </HeaderButtons>

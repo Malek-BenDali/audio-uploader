@@ -5,7 +5,7 @@ import FollowItem from './FollowItem';
 export default props => (
   <FlatList
     {...props}
-    data={props.data}
+    keyExtractor={item => item.id}
     renderItem={({item}) => <FollowItem item={item} />}
   />
 );

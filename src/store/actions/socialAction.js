@@ -1,4 +1,4 @@
-import {START_REQUEST, UPDATE_FOLLOWER, UPDATE_FOLLOWGIN} from './TYPES';
+import {DELETE_FOLLOWER, UPDATE_FOLLOWER, UPDATE_FOLLOWGIN} from './TYPES';
 import {newFollower} from '../../shared/Notifications';
 import firestore from '@react-native-firebase/firestore';
 import Notification from '../../models/Notification';
@@ -45,9 +45,42 @@ export const updateFollowers = payload => {
 };
 
 export const updateFollowing = payload => {
+  const {userUid, uid, photoURL, name, email} = payload;
+  firestore()
+    .collection('Users')
+    .doc(userUid)
+    .update({
+      following: firestore.FieldValue.arrayUnion({
+        uid,
+        name,
+        email,
+        photoURL,
+      }),
+    });
   return dispatch => {
     dispatch({
       type: UPDATE_FOLLOWGIN,
+      payload,
+    });
+  };
+};
+
+export const Unfollow = payload => {
+  const {userUid, uid, photoURL, name, email} = payload;
+  firestore()
+    .collection('Users')
+    .doc(userUid)
+    .update({
+      following: firestore.FieldValue.arrayRemove({
+        uid,
+        name,
+        email,
+        photoURL,
+      }),
+    });
+  return dispatch => {
+    dispatch({
+      type: DELETE_FOLLOWER,
       payload,
     });
   };

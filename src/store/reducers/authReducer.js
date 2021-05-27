@@ -85,7 +85,17 @@ export default (state = initialState, action) => {
     case actionTypes.UPDATE_FOLLOWGIN: {
       return {
         ...state,
-        following: action.payload.following,
+        following: [...state.following, action.payload],
+      };
+    }
+    case actionTypes.DELETE_FOLLOWER: {
+      const FollowersList = state.following.filter(
+        object => object.uid !== action.payload.uid,
+      );
+      console.log(FollowersList);
+      return {
+        ...state,
+        following: FollowersList,
       };
     }
     default:
