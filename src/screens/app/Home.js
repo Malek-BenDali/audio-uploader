@@ -18,7 +18,13 @@ const Home = ({navigation}) => {
               navigation.navigate('Search');
             }}
           />
-          <Item title="Add" iconName="add-circle-outline" onPress={() => {}} />
+          <Item
+            title="Add"
+            iconName="add-circle-outline"
+            onPress={() => {
+              navigation.navigate('CreateConversation');
+            }}
+          />
         </HeaderButtons>
       ),
       headerTitleStyle: {fontFamily: 'Roboto-Bold'},

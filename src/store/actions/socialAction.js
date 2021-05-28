@@ -3,6 +3,7 @@ import {
   UPDATE_FOLLOWER,
   UPDATE_FOLLOWGIN,
   DELETE_FOLLOWING,
+  ADD_CONVERSATION,
 } from './TYPES';
 import {newFollower} from '../../shared/Notifications';
 import firestore from '@react-native-firebase/firestore';
@@ -29,7 +30,7 @@ export const updateFollowers = payload => {
           email,
         },
       });
-      newFollower(`${name} a commencer a vous suivre`, 'message', photoURL);
+      newFollower('New Follower', `${name} started following you`, photoURL);
     } catch (err) {
       console.log('updateFollowers ', err);
     }
@@ -129,6 +130,15 @@ export const deleteFollower = payload => {
     }
     dispatch({
       type: DELETE_FOLLOWING,
+      payload,
+    });
+  };
+};
+
+export const addConversation = payload => {
+  return dispatch => {
+    dispatch({
+      type: ADD_CONVERSATION,
       payload,
     });
   };

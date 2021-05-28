@@ -98,6 +98,12 @@ export default (state = initialState, action) => {
         following: FollowersList,
       };
     }
+    case actionTypes.ADD_CONVERSATION: {
+      return {
+        ...state,
+        conversation: [...state.conversation, action.payload.conversationId],
+      };
+    }
     default:
       return {...state, loading: false};
   }

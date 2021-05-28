@@ -1,7 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, ActivityIndicator, View} from 'react-native';
-import firestore from '@react-native-firebase/firestore';
-import {useSelector} from 'react-redux';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
 import {FollowList} from '../../../shared';
 import {colors} from '../../../assets';
 
