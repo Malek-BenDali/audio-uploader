@@ -8,6 +8,7 @@ import {useSelector} from 'react-redux';
 
 const Search = ({navigation}) => {
   const [searchedText, setSearchedText] = useState('');
+  const [initialResults, setInitialResults] = useState([]);
   const [results, setResults] = useState([]);
   const name = useSelector(state => state.user.name);
   useEffect(() => {
@@ -16,29 +17,25 @@ const Search = ({navigation}) => {
     });
   }, []);
 
-  const getUsers = async () => {
+  useEffect(async () => {
     try {
-      console.log('called');
       const a = await firestore()
         .collection('Users')
-        .where('name', '>=', searchedText)
         .where('name', '!=', name)
+        .limit(50)
         .get();
-      // .limit(5);
-      // .where('name', '<=', searchedText)
-      // console.log(a);
       let querySearch = [];
       a.docs.map(({_data}) => {
         querySearch.push(_data);
       });
-      setResults(querySearch);
+      setInitialResults(querySearch);
     } catch (err) {
       console.log(err);
     }
-  };
+  }, []);
   const handleChange = text => {
     setSearchedText(text);
-    console.log(searchedText);
+    setResults(initialResults.filter(word => word.name.includes(text)));
   };
   return (
     <View style={styles.container}>
@@ -51,7 +48,7 @@ const Search = ({navigation}) => {
           onChangeText={text => handleChange(text)}
           placeholder={'Search'}
           value={searchedText}
-          onSubmitEditing={() => getUsers()}
+          // onSubmitEditing={() => getUsers()}
         />
       </View>
       <FollowList data={results} />

@@ -14,17 +14,22 @@ import {
 } from 'react-native';
 import {colors} from '../../assets';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import firestore from '@react-native-firebase/firestore';
+import {
+  updateFollowing,
+  deleteFollower,
+} from '../../store/actions/socialAction';
 
 const Profile = ({navigation, route}) => {
   const [openImage, setOpenImage] = useState(false);
   const [user, setUser] = useState({});
-  const {photoURL, name, email, following, followers} = useSelector(
+  const {uid, photoURL, name, email, following, followers} = useSelector(
     state => state.user,
   );
   const userProfile = route.params;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     navigation.setOptions({
@@ -55,6 +60,13 @@ const Profile = ({navigation, route}) => {
       headerTitle: user.name,
     });
   }, [user.name]);
+
+  const isBelowThreshold = currentValue => currentValue.uid !== user.uid;
+  const checkFollow = () => {
+    if (!userProfile) return false;
+    if (following?.every(isBelowThreshold)) return true;
+    return false;
+  };
   return (
     <View style={styles.container}>
       <Modal
@@ -121,16 +133,8 @@ const Profile = ({navigation, route}) => {
               onPress={() =>
                 navigation.push('Follow', {
                   screen: 'Following',
-                  followers: !userProfile
-                    ? followers
-                    : user.followers.length > 0
-                    ? user.followers
-                    : [],
-                  following: !userProfile
-                    ? followers
-                    : user.following.length > 0
-                    ? user.following
-                    : [],
+                  followers: !userProfile ? followers : user?.followers,
+                  following: !userProfile ? following : user?.following,
                 })
               }>
               <Text style={styles.text}>
@@ -140,6 +144,50 @@ const Profile = ({navigation, route}) => {
             </TouchableOpacity>
           </View>
         </View>
+
+        {userProfile && checkFollow() ? (
+          <TouchableOpacity
+            style={[styles.followButton]}
+            onPress={() =>
+              dispatch(
+                updateFollowing({
+                  user: {
+                    uid,
+                    photoURL,
+                    name,
+                    email,
+                  },
+                  uid: user.uid,
+                  photoURL: user.photoURL,
+                  name: user.name,
+                  email: user.email,
+                }),
+              )
+            }>
+            <Text style={{color: colors.secondary}}>'Follow'</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={[styles.followButton]}
+            onPress={() =>
+              dispatch(
+                deleteFollower({
+                  user: {
+                    uid,
+                    photoURL,
+                    name,
+                    email,
+                  },
+                  uid: user.uid,
+                  photoURL: user.photoURL,
+                  name: user.name,
+                  email: user.email,
+                }),
+              )
+            }>
+            <Text style={{color: colors.secondary}}>Unfollow</Text>
+          </TouchableOpacity>
+        )}
 
         {/* Body Section  */}
 
@@ -172,7 +220,7 @@ const styles = StyleSheet.create({
   headerTop: {
     flexDirection: 'row',
     // backgroundColor: 'blue',
-    flex: 5,
+    flex: 6,
   },
   headerBottom: {
     flex: 4,
@@ -193,9 +241,9 @@ const styles = StyleSheet.create({
   image: {
     borderColor: colors.white,
     borderWidth: 1,
-    height: height * 0.14,
-    width: height * 0.14,
-    borderRadius: (height * 0.14) / 2,
+    height: height * 0.13,
+    width: height * 0.13,
+    borderRadius: (height * 0.13) / 2,
   },
   headerTopInfo: {
     marginLeft: 10,
@@ -219,5 +267,16 @@ const styles = StyleSheet.create({
   },
   text: {
     color: colors.white,
+  },
+  followButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    height: 22,
+    marginBottom: 20,
+    marginHorizontal: 10,
+    borderRadius: 5,
+    borderColor: colors.white,
+    backgroundColor: colors.white,
   },
 });

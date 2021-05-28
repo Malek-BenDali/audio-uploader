@@ -6,7 +6,6 @@ import {FollowList} from '../../../shared';
 import {colors} from '../../../assets';
 
 const Followers = ({data}) => {
-  console.log('Followers', data);
   return (
     <View style={styles.container}>
       <FollowList data={data} />
