@@ -3,6 +3,7 @@ import firestore from '@react-native-firebase/firestore';
 import {
   updateFollowers,
   updateFollowing,
+  deleteFollower,
 } from '../../store/actions/socialAction';
 import {useSelector, useDispatch} from 'react-redux';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -14,21 +15,44 @@ import {HomeTab} from './Home';
 const Tab = createBottomTabNavigator();
 
 const authNavigation = () => {
-  const {uid, followers, following, notifications} = useSelector(
+  const {uid, followers, following, name, photoURL, email} = useSelector(
     state => state.user,
   );
   const dispatch = useDispatch();
-  useEffect(() => {
-    const subscriber = firestore()
+  useEffect(async () => {
+    const subscriber = await firestore()
       .collection('Users')
       .doc(uid)
       .onSnapshot(documentSnapshot => {
         const newUserData = documentSnapshot.data();
-        if (newUserData?.followers?.length != followers?.length) {
+        console;
+        if (newUserData?.followers?.length > followers?.length) {
           dispatch(
             updateFollowers({
-              followers: newUserData?.followers,
-              uid,
+              uid: newUserData.followers[newUserData?.followers.length - 1].uid,
+              user: {
+                uid,
+                name,
+                email,
+                photoURL,
+              },
+              name: newUserData.followers[newUserData?.followers.length - 1]
+                .name,
+              email:
+                newUserData.followers[newUserData?.followers.length - 1].email,
+              photoURL:
+                newUserData.followers[newUserData?.followers.length - 1]
+                  .photoURL,
+            }),
+          );
+        } else if (newUserData?.followers?.length < followers?.length) {
+          dispatch(
+            deleteFollower({
+              uid: newUserData.followers.uid,
+              user: uid,
+              name: newUserData.followers.name,
+              email: newUserData.followers.email,
+              photoURL: newUserData.followers.photoURL,
             }),
           );
         }
@@ -37,18 +61,22 @@ const authNavigation = () => {
     return () => subscriber();
   }, [followers]);
 
-  useEffect(() => {
-    const subscriber = firestore()
+  useEffect(async () => {
+    const subscriber = await firestore()
       .collection('Users')
       .doc(uid)
       .onSnapshot(documentSnapshot => {
         const newUserData = documentSnapshot.data();
-        if (newUserData?.following.length != following.length)
+        if (newUserData?.following.length > following.length)
           dispatch(
             updateFollowing({
-              notifications,
-              uid,
-              following: newUserData?.following,
+              user: {
+                uid,
+                name,
+                email,
+                photoURL,
+              },
+              uid: newUserData?.following,
             }),
           );
       });

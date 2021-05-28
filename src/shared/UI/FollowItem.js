@@ -13,14 +13,13 @@ import {useSelector, useDispatch} from 'react-redux';
 import {updateFollowing, Unfollow} from '../../store/actions/socialAction';
 
 const FollowItem = ({item}) => {
-  const following = useSelector(state => state.user.following);
-  const uid = useSelector(state => state.user.uid);
+  const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
   const isBelowThreshold = currentValue => currentValue.uid !== item.uid;
 
   const FollowButton = () => {
-    if (following?.every(isBelowThreshold))
+    if (user.following?.every(isBelowThreshold))
       return (
         <TouchableOpacity
           key={item.uid}
@@ -28,7 +27,7 @@ const FollowItem = ({item}) => {
           onPress={() =>
             dispatch(
               updateFollowing({
-                userUid: uid,
+                user,
                 uid: item.uid,
                 photoURL: item.photoURL,
                 name: item.name,
@@ -45,7 +44,7 @@ const FollowItem = ({item}) => {
         onPress={() =>
           dispatch(
             Unfollow({
-              userUid: uid,
+              user,
               uid: item.uid,
               photoURL: item.photoURL,
               name: item.name,

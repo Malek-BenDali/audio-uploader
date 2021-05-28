@@ -1,16 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, ActivityIndicator, View} from 'react-native';
-import firestore from '@react-native-firebase/firestore';
 import {useSelector} from 'react-redux';
 import {FollowList} from '../../../shared';
 import {colors} from '../../../assets';
 
-const Following = () => {
-  const following = useSelector(state => state.user.following);
-
+const Following = ({data}) => {
+  console.log('Following', data);
   return (
     <View style={styles.container}>
-      <FollowList data={following} />
+      <FollowList data={data} />
     </View>
   );
 };

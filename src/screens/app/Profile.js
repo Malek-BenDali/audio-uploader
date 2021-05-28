@@ -42,10 +42,9 @@ const Profile = ({navigation, route}) => {
         ),
     });
     if (userProfile !== undefined) {
-      console.log('fucked one last time');
       firestore()
         .collection('Users')
-        .doc(userProfile.uid)
+        .doc(userProfile?.uid)
         .get()
         .then(doc => setUser(doc._data));
     }
@@ -56,7 +55,6 @@ const Profile = ({navigation, route}) => {
       headerTitle: user.name,
     });
   }, [user.name]);
-
   return (
     <View style={styles.container}>
       <Modal
@@ -106,7 +104,13 @@ const Profile = ({navigation, route}) => {
           <View style={styles.headerBottom}>
             <TouchableOpacity
               style={styles.box}
-              onPress={() => navigation.push('Follow', {screen: 'Followers'})}>
+              onPress={() =>
+                navigation.push('Follow', {
+                  screen: 'Followers',
+                  followers: !userProfile ? followers : user?.followers,
+                  following: !userProfile ? following : user?.following,
+                })
+              }>
               <Text style={styles.text}>
                 {!userProfile ? followers?.length : user?.followers?.length}
               </Text>
@@ -114,9 +118,23 @@ const Profile = ({navigation, route}) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.box}
-              onPress={() => navigation.push('Follow', {screen: 'Following'})}>
+              onPress={() =>
+                navigation.push('Follow', {
+                  screen: 'Following',
+                  followers: !userProfile
+                    ? followers
+                    : user.followers.length > 0
+                    ? user.followers
+                    : [],
+                  following: !userProfile
+                    ? followers
+                    : user.following.length > 0
+                    ? user.following
+                    : [],
+                })
+              }>
               <Text style={styles.text}>
-                {!userProfile ? following?.length : user?.following?.length}{' '}
+                {!userProfile ? following?.length : user?.following?.length}
               </Text>
               <Text style={styles.text}>Following</Text>
             </TouchableOpacity>
