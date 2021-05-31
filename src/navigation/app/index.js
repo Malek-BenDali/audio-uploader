@@ -82,37 +82,7 @@ const authNavigation = () => {
       });
     return () => subscriber();
   }, [following]);
-  return (
-    <Tab.Navigator tabBarOptions={{showLabel: false}}>
-      <Tab.Screen
-        name="Home"
-        options={{
-          tabBarIcon: ({focused}) => (
-            <Ionicons
-              name={focused ? 'home' : 'home-outline'}
-              size={focused ? 35 : 25}
-              color={colors.primary}
-            />
-          ),
-        }}
-        component={HomeTab}
-      />
-
-      <Tab.Screen
-        name="ProfileTab"
-        options={{
-          tabBarIcon: ({focused}) => (
-            <Ionicons
-              name={focused ? 'person-circle-sharp' : 'person-circle-outline'}
-              size={focused ? 35 : 25}
-              color={colors.primary}
-            />
-          ),
-        }}
-        component={ProfileTab}
-      />
-    </Tab.Navigator>
-  );
+  return <HomeTab />;
 };
 
 export default authNavigation;

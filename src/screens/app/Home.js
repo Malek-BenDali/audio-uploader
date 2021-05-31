@@ -8,33 +8,9 @@ import {colors} from '../../assets';
 import {ConversationItem, HomeHeader} from '../components';
 import firestore from '@react-native-firebase/firestore';
 
-const Home = ({navigation}) => {
+const Home = () => {
   const [initialResults, setInitialResults] = useState([]);
-  useEffect(() => {
-    navigation.setOptions({
-      // headerShown: false,
-      headerRight: () => (
-        <HeaderButtons HeaderButtonComponent={HeaderButton}>
-          <Item
-            title="Cart"
-            iconName="search-circle-outline"
-            onPress={() => {
-              navigation.navigate('Search');
-            }}
-          />
-          <Item
-            title="Add"
-            iconName="add-circle-outline"
-            onPress={() => {
-              navigation.navigate('CreateConversation');
-            }}
-          />
-        </HeaderButtons>
-      ),
-      headerTitleStyle: {fontFamily: 'Roboto-Bold'},
-      title: 'MaleksAPP',
-    });
-  }, []);
+
   useEffect(async () => {
     try {
       const a = await firestore().collection('Conversation').limit(50).get();
@@ -48,7 +24,7 @@ const Home = ({navigation}) => {
     }
   }, []);
   const dispatch = useDispatch();
-  console.log(initialResults);
+  // console.log(initialResults);
   return (
     <View style={styles.container}>
       <FlatList
@@ -70,5 +46,5 @@ const Home = ({navigation}) => {
 export default Home;
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: colors.white},
+  container: {flex: 1, backgroundColor: colors.primary},
 });

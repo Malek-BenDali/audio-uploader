@@ -13,7 +13,7 @@ import firestore from '@react-native-firebase/firestore';
 //   }, []);
 
 const ConversationItem = ({item}) => {
-  console.log('item', item);
+  // console.log('item', item);
   return (
     <TouchableOpacity style={styles.container}>
       <ImageBackground
