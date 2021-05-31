@@ -16,12 +16,14 @@ import {
   removeConversation,
 } from '../../../store/actions/socialAction';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {HeaderConversation} from '../../components';
 
 const Conversation = ({navigation, route}) => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState();
   const [member, setMember] = useState(false);
-  const {title, conversationId} = route.params;
+  const {title, conversationId, uri} = route.params;
   const userUid = useSelector(state => state.user.uid);
   const userConversation = useSelector(state => state.user.conversation);
 
@@ -62,12 +64,14 @@ const Conversation = ({navigation, route}) => {
       .collection('Conversation')
       .doc(conversationId)
       .get();
+    setData(a.data());
     setMember(a.data().participants.includes(userUid));
     setLoading(false);
   };
 
   useEffect(() => {
     navigation.setOptions({
+      headerShown: false,
       title,
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
@@ -88,11 +92,9 @@ const Conversation = ({navigation, route}) => {
   }, [userConversation]);
 
   return loading ? (
-    <ActivityIndicator />
+    <ActivityIndicator size="large" color={colors.secondary} />
   ) : (
-    <View style={styles.container}>
-      <Text>Conversation Screen</Text>
-    </View>
+    <HeaderConversation data={data} addMember={addMember} />
   );
 };
 

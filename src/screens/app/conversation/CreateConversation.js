@@ -25,6 +25,7 @@ const reviewSchema = yup.object({
   title: yup.string().min(3).required(),
   about: yup.string().min(3).required(),
   description: yup.string().min(3).required(),
+  tags: yup.string().min(3).required(),
 });
 
 const CreateConversation = ({navigation}) => {
@@ -42,6 +43,8 @@ const CreateConversation = ({navigation}) => {
     setUploading(true);
     actions.resetForm();
     const data = {...values, image, uid: uuid.v4()};
+    const tags = values.tags.split(' ');
+    console.log(tags);
 
     let filename = image.substring(image.lastIndexOf('/') + 1);
     try {
@@ -55,7 +58,7 @@ const CreateConversation = ({navigation}) => {
         createdAd: Date.now(),
         about: data.about,
         description: data.description,
-        tags: [],
+        tags: tags,
         moderator: userUid,
       });
       dispatch(addConversation({conversationId: data.uid}));
@@ -93,6 +96,7 @@ const CreateConversation = ({navigation}) => {
               title: '',
               about: '',
               description: '',
+              tags: '',
             }}
             validationSchema={reviewSchema}
             onSubmit={(values, actions) => handleFormSubmit(values, actions)}>
@@ -145,6 +149,18 @@ const CreateConversation = ({navigation}) => {
                   />
                   <Text style={styles.errorMessage}>
                     {touched.about && errors.about}
+                  </Text>
+                </View>
+                <View style={styles.inputView}>
+                  <TextInput
+                    placeholder="tags(fun food ...)"
+                    style={styles.input}
+                    value={values.tags}
+                    onChangeText={handleChange('tags')}
+                    onBlur={handleBlur('tags')}
+                  />
+                  <Text style={styles.errorMessage}>
+                    {touched.tags && errors.tags}
                   </Text>
                 </View>
                 <View style={styles.inputView}>

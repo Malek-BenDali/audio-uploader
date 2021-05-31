@@ -1,3 +1,5 @@
 import ConversationItem from './ConversationItem';
 import HomeHeader from './HomeHeader';
-export {ConversationItem, HomeHeader};
+import Messages from './Messages';
+import HeaderConversation from './HeaderConversation';
+export {ConversationItem, HomeHeader, HeaderConversation, Messages};
