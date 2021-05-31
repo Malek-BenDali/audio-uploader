@@ -1,8 +1,7 @@
 import React, {useEffect} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-const Conversation = ({navigation, route}) => {
-  console.log(route.params);
+const Conversation = ({navigation}) => {
   useEffect(async () => {
     navigation.setOptions({
       title: 'Conver name',

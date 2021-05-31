@@ -47,7 +47,7 @@ const CreateConversation = ({navigation}) => {
     try {
       await storage().ref(filename).putFile(image);
       const uri = await storage().ref(filename).getDownloadURL();
-      await firestore().collection('Conversation').add({
+      await firestore().collection('Conversation').doc(data.uid).set({
         uid: data.uid,
         participants: [],
         image: uri,
