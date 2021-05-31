@@ -146,7 +146,7 @@ const Profile = ({navigation, route}) => {
           </View>
         </View>
 
-        {userProfile && checkFollow() ? (
+        {!userProfile && checkFollow() ? (
           <TouchableOpacity
             style={[styles.followButton]}
             onPress={() =>

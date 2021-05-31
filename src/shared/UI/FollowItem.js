@@ -105,10 +105,10 @@ const styles = StyleSheet.create({
     width: width * 0.2,
   },
   primaryBack: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.secondary,
   },
   whiteBack: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.tertiary,
     borderWidth: 1,
     borderColor: colors.primary,
   },
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   unFollowText: {
-    color: colors.primary,
+    color: colors.white,
   },
   image: {
     width: width * 0.2,

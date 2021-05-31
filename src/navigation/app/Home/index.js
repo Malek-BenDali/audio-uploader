@@ -9,6 +9,7 @@ import {
 } from '../../../screens/app';
 import {createNativeStackNavigator} from 'react-native-screens/native-stack';
 import Follow from '../Profile/Follow';
+import {colors} from '../../../assets';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +19,10 @@ const HomeTab = () => {
       screenOptions={{
         stackAnimation: 'slide_from_right',
         statusBarAnimation: 'slide',
+        headerStyle: {
+          backgroundColor: colors.primary,
+        },
+        headerTintColor: colors.black,
       }}>
       <Stack.Screen
         name="Home"

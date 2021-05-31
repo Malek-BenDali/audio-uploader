@@ -183,7 +183,7 @@ export default CreateConversation;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.white,
+    backgroundColor: colors.primary,
     alignItems: 'center',
     padding: 10,
   },
@@ -192,6 +192,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     backgroundColor: colors.lightGray,
     borderRadius: 10,
+    backgroundColor: colors.tertiary,
   },
   description: {
     height: 70,
@@ -219,7 +220,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 25,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.secondary,
   },
   primaryButtonText: {
     fontFamily: 'Roboto-Bold',
