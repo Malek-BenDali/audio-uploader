@@ -24,7 +24,7 @@ import {StackActions} from '@react-navigation/native';
 const reviewSchema = yup.object({
   title: yup.string().min(3).required(),
   about: yup.string().min(3).required(),
-  description: yup.string().min(3).required(),
+  description: yup.string().min(15).required(),
   tags: yup.string().min(3).required(),
 });
 

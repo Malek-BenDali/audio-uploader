@@ -16,7 +16,7 @@ import {
   removeConversation,
 } from '../../../store/actions/socialAction';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {HeaderConversation} from '../../components';
+import {HeaderConversation, Messages} from '../../components';
 
 const Conversation = ({navigation, route}) => {
   const dispatch = useDispatch();
@@ -71,7 +71,7 @@ const Conversation = ({navigation, route}) => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerShown: false,
+      headerShown: member,
       title,
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
@@ -93,6 +93,8 @@ const Conversation = ({navigation, route}) => {
 
   return loading ? (
     <ActivityIndicator size="large" color={colors.secondary} />
+  ) : member ? (
+    <Messages />
   ) : (
     <HeaderConversation data={data} addMember={addMember} />
   );

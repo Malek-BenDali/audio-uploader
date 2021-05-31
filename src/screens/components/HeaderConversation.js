@@ -49,30 +49,19 @@ const HeaderConversation = ({addMember, data}) => {
         <View style={styles.mainContent}>
           <View style={[styles.displayText, styles.column]}>
             <Animatable.Text
-              animation="bounceIn"
+              animation="fadeIn"
               style={[styles.info, styles.robotoBold]}>
               Conversation Owner :
             </Animatable.Text>
             <Animatable.Image
+              animation="bounceIn"
               source={{uri: owner?.photoURL}}
-              style={{
-                width: 80,
-                height: 80,
-                borderRadius: 40,
-                borderWidth: 2,
-                borderColor: colors.black,
-              }}
+              style={styles.image}
             />
-            <Animatable.Text
-              style={styles.info}
-              delay={500}
-              animation="bounceInDown">
+            <Animatable.Text style={styles.info} delay={500} animation="fadeIn">
               {` ${owner?.name}`}
             </Animatable.Text>
-            <Animatable.Text
-              style={styles.info}
-              delay={500}
-              animation="bounceInDown">
+            <Animatable.Text style={styles.info} delay={500} animation="fadeIn">
               {` ${owner?.email}`}
             </Animatable.Text>
           </View>
@@ -82,10 +71,7 @@ const HeaderConversation = ({addMember, data}) => {
               style={[styles.info, styles.robotoBold]}>
               About :
             </Animatable.Text>
-            <Animatable.Text
-              style={styles.info}
-              delay={500}
-              animation="bounceInDown">
+            <Animatable.Text style={styles.info} delay={500} animation="fadeIn">
               {` ${about}`}
             </Animatable.Text>
           </View>
@@ -95,10 +81,7 @@ const HeaderConversation = ({addMember, data}) => {
               style={[styles.info, styles.robotoBold]}>
               participants :
             </Animatable.Text>
-            <Animatable.Text
-              style={styles.info}
-              delay={500}
-              animation="bounceInDown">
+            <Animatable.Text style={styles.info} delay={500} animation="fadeIn">
               {` ${participants.length}`}
             </Animatable.Text>
           </View>
@@ -108,10 +91,7 @@ const HeaderConversation = ({addMember, data}) => {
               style={[styles.info, styles.robotoBold]}>
               Description :
             </Animatable.Text>
-            <Animatable.Text
-              style={styles.info}
-              delay={500}
-              animation="bounceInDown">
+            <Animatable.Text style={styles.info} delay={500} animation="fadeIn">
               {` ${description}`}
             </Animatable.Text>
           </View>
@@ -121,10 +101,7 @@ const HeaderConversation = ({addMember, data}) => {
               style={[styles.info, styles.robotoBold]}>
               Created At :
             </Animatable.Text>
-            <Animatable.Text
-              style={styles.info}
-              delay={500}
-              animation="bounceInDown">
+            <Animatable.Text style={styles.info} delay={500} animation="fadeIn">
               {` ${moment(createdAd).format('DD/MMM/YYYY')}`}
             </Animatable.Text>
           </View>
@@ -134,10 +111,7 @@ const HeaderConversation = ({addMember, data}) => {
               style={[styles.info, styles.robotoBold]}>
               Tags :
             </Animatable.Text>
-            <Animatable.Text
-              delay={500}
-              animation="bounceInDown"
-              style={styles.info}>
+            <Animatable.Text delay={500} animation="fadeIn" style={styles.info}>
               {tags.length ? tags.map(tag => ' #' + tag) : ' No tags'}
             </Animatable.Text>
           </View>
@@ -179,6 +153,13 @@ const styles = StyleSheet.create({
   },
   robotoBold: {
     fontFamily: 'Roboto-Bold',
+  },
+  image: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    borderWidth: 2,
+    borderColor: colors.black,
   },
   info: {
     fontSize: 20,
