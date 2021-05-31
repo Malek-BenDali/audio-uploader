@@ -104,6 +104,15 @@ export default (state = initialState, action) => {
         conversation: [...state.conversation, action.payload.conversationId],
       };
     }
+    case actionTypes.REMOVE_CONVERSATION: {
+      const conversationList = state.following.filter(
+        object => object.uid !== action.payload.conversationId,
+      );
+      return {
+        ...state,
+        conversation: conversationList,
+      };
+    }
     default:
       return {...state, loading: false};
   }

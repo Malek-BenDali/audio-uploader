@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, Button, FlatList} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  FlatList,
+  RefreshControl,
+} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {logout} from '../../store/actions/authAction';
 import {HeaderButton} from '../../shared';
@@ -10,8 +17,9 @@ import firestore from '@react-native-firebase/firestore';
 
 const Home = () => {
   const [initialResults, setInitialResults] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(async () => {
+  const getConversations = async () => {
     try {
       const a = await firestore().collection('Conversation').limit(50).get();
       let querySearch = [];
@@ -22,15 +30,24 @@ const Home = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    getConversations();
+    setRefreshing(false);
   }, []);
-  const dispatch = useDispatch();
-  // console.log(initialResults);
+
+  useEffect(() => {
+    getConversations();
+  }, []);
   return (
     <View style={styles.container}>
       <FlatList
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         ListHeaderComponent={() => <HomeHeader />}
         data={initialResults}
-        keyExtractor={item => item.uid}
         renderItem={({item}) => <ConversationItem item={item} />}
       />
     </View>

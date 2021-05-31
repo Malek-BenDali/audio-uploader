@@ -160,7 +160,7 @@ const CreateConversation = ({navigation}) => {
                   </Text>
                 </View>
                 {uploading ? (
-                  <ActivityIndicator size="large" color={colors.primary} />
+                  <ActivityIndicator size="large" color={colors.secondary} />
                 ) : (
                   <TouchableOpacity
                     title="submit"

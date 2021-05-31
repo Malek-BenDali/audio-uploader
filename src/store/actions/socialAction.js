@@ -1,5 +1,5 @@
 import {
-  DELETE_FOLLOWER,
+  REMOVE_CONVERSATION,
   UPDATE_FOLLOWER,
   UPDATE_FOLLOWGIN,
   DELETE_FOLLOWING,
@@ -139,6 +139,14 @@ export const addConversation = payload => {
   return dispatch => {
     dispatch({
       type: ADD_CONVERSATION,
+      payload,
+    });
+  };
+};
+export const removeConversation = payload => {
+  return dispatch => {
+    dispatch({
+      type: REMOVE_CONVERSATION,
       payload,
     });
   };
