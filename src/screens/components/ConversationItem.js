@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
+import {colors} from '../../assets';
 //   useEffect(async () => {
 //     const a = await firestore().collection('Conversation').doc(item.uid).get();
 //     console.log(a);
@@ -35,7 +36,8 @@ const styles = StyleSheet.create({
   imageBackground: {
     width: '100%',
     height: 200,
-    // borderWidth: 1,
+    borderWidth: 2,
+    borderColor: colors.white,
     borderRadius: 20,
     overflow: 'hidden',
   },

@@ -33,12 +33,6 @@ const Home = () => {
         keyExtractor={item => item.uid}
         renderItem={({item}) => <ConversationItem item={item} />}
       />
-      <Button
-        title="logout"
-        onPress={() => {
-          dispatch(logout());
-        }}
-      />
     </View>
   );
 };

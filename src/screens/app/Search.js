@@ -61,7 +61,7 @@ export default Search;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.white,
+    backgroundColor: colors.primary,
   },
   headerInput: {
     flexDirection: 'row',
@@ -75,6 +75,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     height: 40,
     borderRadius: 30,
-    backgroundColor: '#F0F0F0',
+    backgroundColor: colors.secondary,
   },
 });

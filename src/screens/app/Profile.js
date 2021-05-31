@@ -29,6 +29,7 @@ const Profile = ({navigation, route}) => {
     state => state.user,
   );
   const userProfile = route.params;
+  console.log(userProfile);
   const dispatch = useDispatch();
 
   useEffect(() => {

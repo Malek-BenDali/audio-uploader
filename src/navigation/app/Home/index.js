@@ -4,9 +4,11 @@ import {
   Search,
   CreateConversation,
   Conversation,
+  Profile,
+  EditProfile,
 } from '../../../screens/app';
 import {createNativeStackNavigator} from 'react-native-screens/native-stack';
-import {ProfileTab} from '../Profile';
+import Follow from '../Profile/Follow';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,13 +25,15 @@ const HomeTab = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen name="Search" component={Search} />
-      <Stack.Screen
-        name="Profile"
-        component={ProfileTab}
-        options={{headerShown: false}}
-      />
       <Stack.Screen name="CreateConversation" component={CreateConversation} />
       <Stack.Screen name="Conversation" component={Conversation} />
+      <Stack.Screen
+        name="Profile"
+        // options={{headerShown: false}}
+        component={Profile}
+      />
+      <Stack.Screen name="EditProfile" component={EditProfile} />
+      <Stack.Screen name="Follow" component={Follow} />
     </Stack.Navigator>
   );
 };
