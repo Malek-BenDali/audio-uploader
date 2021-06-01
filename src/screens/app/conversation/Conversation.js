@@ -65,6 +65,7 @@ const Conversation = ({navigation, route}) => {
       .doc(conversationId)
       .get();
     setData(a.data());
+    console.log(a.data());
     setMember(a.data().participants.includes(userUid));
     setLoading(false);
   };

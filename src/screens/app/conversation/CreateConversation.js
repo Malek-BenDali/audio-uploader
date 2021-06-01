@@ -44,12 +44,12 @@ const CreateConversation = ({navigation}) => {
     actions.resetForm();
     const data = {...values, image, uid: uuid.v4()};
     const tags = values.tags.split(' ');
-    console.log(tags);
 
     let filename = image.substring(image.lastIndexOf('/') + 1);
     try {
       await storage().ref(filename).putFile(image);
       const uri = await storage().ref(filename).getDownloadURL();
+      const messages = await firestore().collection('Messages').add({});
       await firestore().collection('Conversation').doc(data.uid).set({
         uid: data.uid,
         participants: [],
@@ -60,6 +60,7 @@ const CreateConversation = ({navigation}) => {
         description: data.description,
         tags: tags,
         moderator: userUid,
+        messages: messages.id,
       });
       dispatch(addConversation({conversationId: data.uid}));
     } catch (err) {
