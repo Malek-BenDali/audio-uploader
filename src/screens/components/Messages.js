@@ -3,7 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableWithoutFeedback,
+  FlatList,
   Pressable,
   Button,
   Dimensions,
@@ -15,13 +15,27 @@ import uuid from 'react-native-uuid';
 import storage from '@react-native-firebase/storage';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {colors} from '../../assets';
+import ConversationUser from './ConversationUser';
+import firestore from '@react-native-firebase/firestore';
 
-const Messages = () => {
+const Messages = ({participants, messagesId, userUid}) => {
   const [audioFile, setAudioFile] = useState('');
   const [recording, setRecording] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [paused, setPaused] = useState(true);
   const [pressed, setpressed] = useState(false);
+
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('Messages')
+      .doc(messagesId)
+      .onSnapshot(doc =>
+        play(doc.data().vocal[doc.data().vocal.length - 1].audioURL),
+      );
+
+    // Stop listening for updates when no longer required
+    return () => subscriber();
+  }, [messagesId]);
 
   const audioRecord = AudioRecord;
   let sound = null;
@@ -53,28 +67,32 @@ const Messages = () => {
 
   const stop = async () => {
     if (!recording) return;
-    console.log('stop record');
     let audioFile = await audioRecord.stop();
-    console.log('audioFile', audioFile);
-    // setOptions({...options, audioFile, recording: false});
-    setAudioFile(audioFile);
     await uploadFile(audioFile);
+
     setRecording(false);
   };
 
   const uploadFile = async audioFile => {
     let filename = uuid.v4() + '.wav';
     try {
-      // console.log('here', audioFile);
       await storage().ref(filename).putFile(audioFile);
       const uri = await storage().ref(filename).getDownloadURL();
-      console.log(uri);
+      await saveMessage(uri);
     } catch (err) {
       console.log(err);
     }
   };
+  const saveMessage = async audioURL => {
+    await firestore()
+      .collection('Messages')
+      .doc(messagesId)
+      .update({
+        vocal: firestore.FieldValue.arrayUnion({userUid, audioURL}),
+      });
+  };
 
-  const load = () => {
+  const load = audioFile => {
     return new Promise((resolve, reject) => {
       if (!audioFile) {
         return reject('file path is empty');
@@ -92,14 +110,13 @@ const Messages = () => {
     });
   };
 
-  const play = async () => {
-    if (!loaded) {
-      try {
-        await load();
-      } catch (error) {
-        console.log(error);
-      }
+  const play = async audioFile => {
+    try {
+      await load(audioFile);
+    } catch (error) {
+      console.log(error);
     }
+
     // setOptions({...options, paused: false});
     setPaused(false);
     Sound.setCategory('Playback');
@@ -116,15 +133,23 @@ const Messages = () => {
     });
   };
   const record = () => {
-    // start();
     setpressed(true);
+    start();
   };
   const lacher = () => {
     setpressed(false);
+    stop();
   };
 
   return (
     <View style={styles.container}>
+      <FlatList
+        contentContainerStyle={styles.usersList}
+        data={participants}
+        numColumns={3}
+        renderItem={({item}) => <ConversationUser item={item} />}
+        keyExtractor={item => item.userUid}
+      />
       <Pressable
         style={[styles.micButton, pressed && styles.micButtonPressed]}
         onPressIn={() => record()}
@@ -156,6 +181,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.primary,
+  },
+  usersList: {
+    flex: 1,
+    backgroundColor: colors.white,
+    marginTop: 40,
+    borderTopRightRadius: 60,
+    borderTopLeftRadius: 60,
+    padding: 40,
   },
   micButton: {
     height: width * 0.3,

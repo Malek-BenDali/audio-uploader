@@ -23,8 +23,8 @@ const Conversation = ({navigation, route}) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState();
   const [member, setMember] = useState(false);
-  const {title, conversationId, uri} = route.params;
-  const userUid = useSelector(state => state.user.uid);
+  const {title, conversationId} = route.params;
+  const {uid, photoURL, name} = useSelector(state => state.user);
   const userConversation = useSelector(state => state.user.conversation);
 
   const addMember = async () => {
@@ -32,11 +32,15 @@ const Conversation = ({navigation, route}) => {
       .collection('Conversation')
       .doc(conversationId)
       .update({
-        participants: firestore.FieldValue.arrayUnion(userUid),
+        participants: firestore.FieldValue.arrayUnion({
+          userUid: uid,
+          photoURL,
+          name,
+        }),
       });
     await firestore()
       .collection('Users')
-      .doc(userUid)
+      .doc(uid)
       .update({
         conversation: firestore.FieldValue.arrayUnion(conversationId),
       });
@@ -47,11 +51,15 @@ const Conversation = ({navigation, route}) => {
       .collection('Conversation')
       .doc(conversationId)
       .update({
-        participants: firestore.FieldValue.arrayRemove(userUid),
+        participants: firestore.FieldValue.arrayRemove({
+          userUid: uid,
+          photoURL,
+          name,
+        }),
       });
     await firestore()
       .collection('Users')
-      .doc(userUid)
+      .doc(uid)
       .update({
         conversation: firestore.FieldValue.arrayRemove(conversationId),
       });
@@ -65,14 +73,19 @@ const Conversation = ({navigation, route}) => {
       .doc(conversationId)
       .get();
     setData(a.data());
-    console.log(a.data());
-    setMember(a.data().participants.includes(userUid));
+
+    const result = a
+      .data()
+      .participants.find(currentValue => currentValue.userUid === uid);
+    console.log(result?.userUid === uid);
+    setMember(result?.userUid);
+
     setLoading(false);
   };
 
   useEffect(() => {
     navigation.setOptions({
-      headerShown: member,
+      headerShown: member == undefined ? false : true,
       title,
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
@@ -95,7 +108,11 @@ const Conversation = ({navigation, route}) => {
   return loading ? (
     <ActivityIndicator size="large" color={colors.secondary} />
   ) : member ? (
-    <Messages />
+    <Messages
+      participants={data.participants}
+      messagesId={data.messages}
+      userUid={uid}
+    />
   ) : (
     <HeaderConversation data={data} addMember={addMember} />
   );
