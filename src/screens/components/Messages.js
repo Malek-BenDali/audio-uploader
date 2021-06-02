@@ -31,6 +31,8 @@ const Messages = ({participants, messagesId, userUid}) => {
     setActiveId(audioQueue[0]?.userUid);
     play(audioQueue[0]?.audioURL);
     audioQueue.shift();
+
+    setFirstLand(false);
   };
 
   useEffect(() => {
@@ -43,7 +45,6 @@ const Messages = ({participants, messagesId, userUid}) => {
 
         audioQueue.push(data);
         handleAudioQueue();
-        setFirstLand(false);
         console.log('new coming up');
       });
 
@@ -64,11 +65,12 @@ const Messages = ({participants, messagesId, userUid}) => {
 
     audioRecord.init(options);
 
-    audioRecord.on('data', data => {
+    const a = audioRecord.on('data', data => {
       const chunk = Buffer.from(data, 'base64');
       console.log('chunk size', chunk.byteLength);
       // do something with audio chunk
     });
+    return a;
   }, []);
 
   const start = () => {
@@ -145,7 +147,6 @@ const Messages = ({participants, messagesId, userUid}) => {
     setpressed(false);
     stop();
   };
-
   return (
     <View style={styles.container}>
       <FlatList
@@ -153,7 +154,7 @@ const Messages = ({participants, messagesId, userUid}) => {
         data={participants}
         numColumns={2}
         renderItem={({item}) => (
-          <ConversationUser item={item} active={activeId === userUid} />
+          <ConversationUser item={item} active={activeId} />
         )}
         keyExtractor={item => item.userUid}
       />
