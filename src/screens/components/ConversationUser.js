@@ -1,10 +1,15 @@
 import React from 'react';
 import {StyleSheet, Text, View, Image, Dimensions} from 'react-native';
+import {colors} from '../../assets';
 
-const ConversationUser = ({item}) => {
+const ConversationUser = ({item, active}) => {
+  console.log(active);
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={{uri: item.photoURL}} />
+      <Image
+        style={[styles.image, active && styles.active]}
+        source={{uri: item.photoURL}}
+      />
       <Text> {item.name} </Text>
     </View>
   );
@@ -24,7 +29,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: width * 0.3,
-    borderWidth: 2,
     borderColor: 'black',
+  },
+  active: {
+    borderWidth: 5,
+    borderColor: colors.secondary,
   },
 });

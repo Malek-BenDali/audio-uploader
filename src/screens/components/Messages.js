@@ -19,23 +19,37 @@ import ConversationUser from './ConversationUser';
 import firestore from '@react-native-firebase/firestore';
 
 const Messages = ({participants, messagesId, userUid}) => {
-  const [audioFile, setAudioFile] = useState('');
   const [recording, setRecording] = useState(false);
-  const [loaded, setLoaded] = useState(false);
-  const [paused, setPaused] = useState(true);
   const [pressed, setpressed] = useState(false);
+  const [activeId, setActiveId] = useState(false);
+  //   const stack = [];
+  // stack.Push(2);       // stack is now [2]
+  // stack.Push(5);       // stack is now [2, 5]
+  // var i = stack.pop(); // stack is now [2]
+  // alert(i);            // displays 5
+
+  // const  queue = [];
+  // queue.Push(2);         // queue is now [2]
+  // queue.Push(5);         // queue is now [2, 5]
+  // var i = queue.shift(); // queue is now [5]
+  // alert(i);
+  const audioQueue = [];
 
   useEffect(() => {
     const subscriber = firestore()
       .collection('Messages')
       .doc(messagesId)
-      .onSnapshot(doc =>
-        play(doc.data().vocal[doc.data().vocal.length - 1].audioURL),
-      );
+      .onSnapshot(doc => {
+        const data =
+          doc.data().vocal && doc.data().vocal[doc.data().vocal.length - 1];
+        play(data.audioURL);
+        setActiveId(data.userUid);
+      });
 
     // Stop listening for updates when no longer required
     return () => subscriber();
   }, [messagesId]);
+  console.log(audioQueue);
 
   const audioRecord = AudioRecord;
   let sound = null;
@@ -59,9 +73,7 @@ const Messages = ({participants, messagesId, userUid}) => {
 
   const start = () => {
     console.log('start record');
-    setAudioFile('');
     setRecording(true);
-    setLoaded(false);
     audioRecord.start();
   };
 
@@ -103,8 +115,6 @@ const Messages = ({participants, messagesId, userUid}) => {
           console.log('failed to load the file', error);
           return reject(error);
         }
-        // setOptions({...options, loaded: true});
-        setLoaded(true);
         return resolve();
       });
     });
@@ -113,24 +123,19 @@ const Messages = ({participants, messagesId, userUid}) => {
   const play = async audioFile => {
     try {
       await load(audioFile);
+      Sound.setCategory('Playback');
+
+      sound.play(success => {
+        if (success) {
+          console.log('successfully finished playing');
+          setActiveId(false);
+        } else {
+          console.log('playback failed due to audio decoding errors');
+        }
+      });
     } catch (error) {
       console.log(error);
     }
-
-    // setOptions({...options, paused: false});
-    setPaused(false);
-    Sound.setCategory('Playback');
-
-    sound.play(success => {
-      if (success) {
-        console.log('successfully finished playing');
-      } else {
-        console.log('playback failed due to audio decoding errors');
-      }
-      // setOptions({...options, paused: true});
-      setPaused(true);
-      // this.sound.release();
-    });
   };
   const record = () => {
     setpressed(true);
@@ -147,7 +152,9 @@ const Messages = ({participants, messagesId, userUid}) => {
         contentContainerStyle={styles.usersList}
         data={participants}
         numColumns={3}
-        renderItem={({item}) => <ConversationUser item={item} />}
+        renderItem={({item}) => (
+          <ConversationUser item={item} active={activeId === userUid} />
+        )}
         keyExtractor={item => item.userUid}
       />
       <Pressable
@@ -162,16 +169,6 @@ const Messages = ({participants, messagesId, userUid}) => {
       </Pressable>
     </View>
   );
-  // return (
-  //   <View style={styles.container}>
-  //     <View style={styles.row}>
-  //       <Button onPress={start} title="Record" disabled={recording} />
-  //       <Button onPress={stop} title="Stop" disabled={!recording} />
-
-  //       <Button onPress={play} title="Play" disabled={!audioFile} />
-  //     </View>
-  //   </View>
-  // );
 };
 
 export default Messages;
