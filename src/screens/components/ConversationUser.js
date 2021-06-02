@@ -1,13 +1,14 @@
 import React from 'react';
 import {StyleSheet, Text, View, Image, Dimensions} from 'react-native';
 import {colors} from '../../assets';
+import {useSelector} from 'react-redux';
 
 const ConversationUser = ({item, active}) => {
-  console.log(active);
+  const uid = useSelector(state => state.user.uid);
   return (
     <View style={styles.container}>
       <Image
-        style={[styles.image, active && styles.active]}
+        style={active === uid ? [styles.image, styles.active] : styles.image}
         source={{uri: item.photoURL}}
       />
       <Text> {item.name} </Text>
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: width * 0.3,
+    width: width * 0.4,
     borderColor: 'black',
   },
   active: {

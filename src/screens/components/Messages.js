@@ -22,18 +22,16 @@ const Messages = ({participants, messagesId, userUid}) => {
   const [recording, setRecording] = useState(false);
   const [pressed, setpressed] = useState(false);
   const [activeId, setActiveId] = useState(false);
-  //   const stack = [];
-  // stack.Push(2);       // stack is now [2]
-  // stack.Push(5);       // stack is now [2, 5]
-  // var i = stack.pop(); // stack is now [2]
-  // alert(i);            // displays 5
+  const [firstLand, setFirstLand] = useState(true);
+  const [audioQueue, setAudioQueue] = useState([]);
 
-  // const  queue = [];
-  // queue.Push(2);         // queue is now [2]
-  // queue.Push(5);         // queue is now [2, 5]
-  // var i = queue.shift(); // queue is now [5]
-  // alert(i);
-  const audioQueue = [];
+  const handleAudioQueue = async () => {
+    console.log(' first land', firstLand);
+
+    setActiveId(audioQueue[0]?.userUid);
+    play(audioQueue[0]?.audioURL);
+    audioQueue.shift();
+  };
 
   useEffect(() => {
     const subscriber = firestore()
@@ -42,14 +40,16 @@ const Messages = ({participants, messagesId, userUid}) => {
       .onSnapshot(doc => {
         const data =
           doc.data().vocal && doc.data().vocal[doc.data().vocal.length - 1];
-        play(data.audioURL);
-        setActiveId(data.userUid);
+
+        audioQueue.push(data);
+        handleAudioQueue();
+        setFirstLand(false);
+        console.log('new coming up');
       });
 
     // Stop listening for updates when no longer required
     return () => subscriber();
   }, [messagesId]);
-  console.log(audioQueue);
 
   const audioRecord = AudioRecord;
   let sound = null;
@@ -124,7 +124,7 @@ const Messages = ({participants, messagesId, userUid}) => {
     try {
       await load(audioFile);
       Sound.setCategory('Playback');
-
+      console.log('playing ', audioFile);
       sound.play(success => {
         if (success) {
           console.log('successfully finished playing');
@@ -151,7 +151,7 @@ const Messages = ({participants, messagesId, userUid}) => {
       <FlatList
         contentContainerStyle={styles.usersList}
         data={participants}
-        numColumns={3}
+        numColumns={2}
         renderItem={({item}) => (
           <ConversationUser item={item} active={activeId === userUid} />
         )}
