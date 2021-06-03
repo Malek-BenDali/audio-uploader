@@ -5,6 +5,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {colors} from '../../assets';
@@ -15,7 +16,7 @@ import * as yup from 'yup';
 import {Formik} from 'formik';
 
 const EditProfile = ({navigation}) => {
-  const {name, uid} = useSelector(state => state.user);
+  const {name, description, uid} = useSelector(state => state.user);
   console.log(uid);
   useEffect(() => {
     navigation.setOptions({
@@ -48,15 +49,17 @@ const EditProfile = ({navigation}) => {
 
   const reviewSchema = yup.object({
     name: yup.string().required().min(3).max(10),
+    description: yup.string().required().min(15).max(100),
   });
 
   return (
     <View style={styles.container}>
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView style={{flex: 1}}>
         <View style={styles.FormView}>
           <Formik
             initialValues={{
               name: name,
+              description,
             }}
             validationSchema={reviewSchema}
             onSubmit={(values, actions) => handleFormSubmit(values, actions)}>
@@ -79,14 +82,16 @@ const EditProfile = ({navigation}) => {
                 <Text style={styles.errorMessage}>
                   {touched.name && errors.name}
                 </Text>
-                <View style={styles.SubmitView}>
-                  <TouchableOpacity
-                    title="submit"
-                    style={styles.primaryButton}
-                    onPress={handleSubmit}>
-                    <Text style={styles.primaryButtonText}>Sign in</Text>
-                  </TouchableOpacity>
-                </View>
+                <TextInput
+                  style={[styles.input, styles.description]}
+                  placeholder="description"
+                  value={values.description}
+                  onChangeText={handleChange('description')}
+                  onBlur={handleBlur('description')}
+                />
+                <Text style={styles.errorMessage}>
+                  {touched.description && errors.description}
+                </Text>
               </View>
             )}
           </Formik>
@@ -97,18 +102,27 @@ const EditProfile = ({navigation}) => {
 };
 
 export default EditProfile;
+const {width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   input: {
-    borderWidth: 1,
+    // borderWidth: 1,
+    borderRadius: 10,
+    width: width * 0.5,
+    backgroundColor: colors.tertiary,
+  },
+  description: {
+    height: 80,
   },
   container: {
     flex: 1,
-    backgroundColor: colors.white,
+
+    backgroundColor: colors.primary,
   },
   FormView: {
     alignItems: 'center',
     marginTop: 40,
+
     flex: 1,
   },
   SubmitView: {

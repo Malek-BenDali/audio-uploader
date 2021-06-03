@@ -21,30 +21,49 @@ import {
   updateFollowing,
   deleteFollower,
 } from '../../store/actions/socialAction';
+import moment from 'moment';
+import Octocons from 'react-native-vector-icons/Octicons';
 
 const Profile = ({navigation, route}) => {
   const [openImage, setOpenImage] = useState(false);
   const [user, setUser] = useState({});
-  const {uid, photoURL, name, email, following, followers} = useSelector(
-    state => state.user,
-  );
+  const {
+    uid,
+    photoURL,
+    name,
+    email,
+    following,
+    followers,
+    lastLogin,
+    description,
+    interestedIn,
+  } = useSelector(state => state.user);
   const userProfile = route.params;
-  console.log(userProfile);
   const dispatch = useDispatch();
 
   useEffect(() => {
     navigation.setOptions({
+      headerTitle: user.name,
       headerRight: () =>
         !userProfile && (
-          <HeaderButtons HeaderButtonComponent={HeaderButton}>
-            <Item
-              title="settings"
-              iconName="settings"
-              onPress={() => {
-                navigation.navigate('EditProfile');
-              }}
-            />
-          </HeaderButtons>
+          <>
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+              <Item
+                title="chatbubbles"
+                iconName="chatbubbles"
+                onPress={() => {}}
+              />
+            </HeaderButtons>
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+              <Item
+                title="settings"
+                iconName="settings"
+                onPress={() => {
+                  navigation.navigate('EditProfile');
+                }}
+              />
+            </HeaderButtons>
+          </>
         ),
     });
     if (userProfile !== undefined) {
@@ -54,13 +73,58 @@ const Profile = ({navigation, route}) => {
         .get()
         .then(doc => setUser(doc._data));
     }
-  }, []);
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerTitle: user.name,
-    });
   }, [user.name]);
+
+  const FollowButton = () => {
+    return checkFollow() ? (
+      <TouchableOpacity
+        style={[styles.followButton]}
+        onPress={() =>
+          dispatch(
+            updateFollowing({
+              user: {
+                uid,
+                photoURL,
+                name,
+                email,
+              },
+              uid: user.uid,
+              photoURL: user.photoURL,
+              name: user.name,
+              email: user.email,
+            }),
+          )
+        }>
+        <Text style={{color: colors.secondary}}>'Follow'</Text>
+      </TouchableOpacity>
+    ) : (
+      <TouchableOpacity
+        style={[styles.followButton]}
+        onPress={() =>
+          dispatch(
+            deleteFollower({
+              user: {
+                uid,
+                photoURL,
+                name,
+                email,
+              },
+              uid: user.uid,
+              photoURL: user.photoURL,
+              name: user.name,
+              email: user.email,
+            }),
+          )
+        }>
+        <Text style={{color: colors.secondary}}>Unfollow</Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const compareDate = date1 => {
+    console.log(moment().diff(date1, 'days'));
+  };
+  compareDate(lastLogin);
 
   const isBelowThreshold = currentValue => currentValue.uid !== user.uid;
   const checkFollow = () => {
@@ -145,54 +209,33 @@ const Profile = ({navigation, route}) => {
             </TouchableOpacity>
           </View>
         </View>
-
-        {!userProfile && checkFollow() ? (
-          <TouchableOpacity
-            style={[styles.followButton]}
-            onPress={() =>
-              dispatch(
-                updateFollowing({
-                  user: {
-                    uid,
-                    photoURL,
-                    name,
-                    email,
-                  },
-                  uid: user.uid,
-                  photoURL: user.photoURL,
-                  name: user.name,
-                  email: user.email,
-                }),
-              )
-            }>
-            <Text style={{color: colors.secondary}}>'Follow'</Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            style={[styles.followButton]}
-            onPress={() =>
-              dispatch(
-                deleteFollower({
-                  user: {
-                    uid,
-                    photoURL,
-                    name,
-                    email,
-                  },
-                  uid: user.uid,
-                  photoURL: user.photoURL,
-                  name: user.name,
-                  email: user.email,
-                }),
-              )
-            }>
-            <Text style={{color: colors.secondary}}>Unfollow</Text>
-          </TouchableOpacity>
-        )}
+        {userProfile && <FollowButton />}
 
         {/* Body Section  */}
 
-        <View style={styles.body}></View>
+        <View style={styles.body}>
+          <View style={styles.row}>
+            <Octocons name="primitive-dot" size={20} color={colors.secondary} />
+            <Text style={styles.robotoBold}> last activity : </Text>
+            <Text style={styles.roboto}>
+              {moment(!userProfile ? lastLogin : user?.lastLogin).format(
+                'DD/MMM',
+              )}
+            </Text>
+          </View>
+          <View style={styles.row}>
+            <Octocons name="primitive-dot" size={20} color={colors.black} />
+            <Text style={styles.robotoBold}> Description : </Text>
+          </View>
+          <Text style={[styles.roboto]}>{description}</Text>
+          <View style={styles.row}>
+            <Octocons name="primitive-dot" size={20} color={colors.black} />
+            <Text style={styles.robotoBold}> interestedIn : </Text>
+          </View>
+          <Text style={[styles.roboto, styles.blue]}>
+            {interestedIn?.map(tag => `#${tag} `)}
+          </Text>
+        </View>
       </ScrollView>
     </View>
   );
@@ -208,19 +251,32 @@ const styles = StyleSheet.create({
   },
   imageBackground: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: colors.black,
     justifyContent: 'center',
+  },
+  blue: {
+    color: colors.blue,
   },
   closeImage: {position: 'absolute', top: 15, right: 15},
   header: {
     height: height * 0.25,
-    // backgroundColor: 'red',
     margin: 7,
     padding: 5,
   },
+  roboto: {
+    fontFamily: 'Roboto-Regular',
+    fontSize: 18,
+  },
+  column: {
+    flexDirection: 'column',
+  },
+  row: {
+    marginTop: 30,
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
   headerTop: {
     flexDirection: 'row',
-    // backgroundColor: 'blue',
     flex: 6,
   },
   headerBottom: {
@@ -237,10 +293,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
-    borderColor: colors.white,
+    borderColor: colors.black,
   },
   image: {
-    borderColor: colors.white,
+    borderColor: colors.black,
     borderWidth: 1,
     height: height * 0.13,
     width: height * 0.13,
@@ -264,10 +320,15 @@ const styles = StyleSheet.create({
     height: 500,
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
-    // marginHorizontal: 10,
+    paddingHorizontal: 20,
+    paddingTop: 10,
+  },
+  robotoBold: {
+    fontFamily: 'Roboto-Bold',
+    fontSize: 18,
   },
   text: {
-    color: colors.white,
+    color: colors.black,
   },
   followButton: {
     alignItems: 'center',

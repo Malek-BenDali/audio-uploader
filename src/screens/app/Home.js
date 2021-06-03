@@ -7,10 +7,6 @@ import {
   FlatList,
   RefreshControl,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {logout} from '../../store/actions/authAction';
-import {HeaderButton} from '../../shared';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import {colors} from '../../assets';
 import {ConversationItem, HomeHeader} from '../components';
 import firestore from '@react-native-firebase/firestore';
