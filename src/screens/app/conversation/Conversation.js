@@ -104,7 +104,21 @@ const Conversation = ({navigation, route}) => {
   useEffect(() => {
     getUpdates();
   }, [userConversation]);
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('Conversation')
+      .doc(conversationId)
+      .onSnapshot(doc => {
+        setData(oldstate => ({
+          ...oldstate,
+          participants: doc.data().participants,
+        }));
+      });
 
+    // Stop listening for updates when no longer required
+    return () => subscriber();
+  }, [conversationId]);
+  console.log(data);
   return loading ? (
     <ActivityIndicator size="large" color={colors.secondary} />
   ) : member ? (

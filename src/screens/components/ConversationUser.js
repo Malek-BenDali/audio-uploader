@@ -3,7 +3,6 @@ import {StyleSheet, Text, View, Image, Dimensions} from 'react-native';
 import {colors} from '../../assets';
 
 const ConversationUser = ({item, active}) => {
-  console.log(item);
   return (
     <View style={styles.container}>
       <Image
@@ -32,6 +31,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: width * 0.4,
     borderColor: 'black',
+    marginBottom: 10,
   },
   active: {
     borderWidth: 5,
