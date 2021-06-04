@@ -36,6 +36,7 @@ const Conversation = ({navigation, route}) => {
           userUid: uid,
           photoURL,
           name,
+          openMic: true,
         }),
       });
     await firestore()
@@ -55,6 +56,7 @@ const Conversation = ({navigation, route}) => {
           userUid: uid,
           photoURL,
           name,
+          openMic: true,
         }),
       });
     await firestore()
@@ -126,6 +128,8 @@ const Conversation = ({navigation, route}) => {
       participants={data.participants}
       messagesId={data.messages}
       userUid={uid}
+      moderator={data.moderator}
+      conversationId={conversationId}
     />
   ) : (
     <HeaderConversation data={data} addMember={addMember} />

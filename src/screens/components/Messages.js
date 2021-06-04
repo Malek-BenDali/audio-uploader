@@ -18,12 +18,13 @@ import {colors} from '../../assets';
 import ConversationUser from './ConversationUser';
 import firestore from '@react-native-firebase/firestore';
 
-const Messages = ({participants, messagesId, userUid}) => {
+const Messages = ({participants, messagesId, userUid, conversationId}) => {
   const [recording, setRecording] = useState(false);
   const [pressed, setpressed] = useState(false);
   const [activeId, setActiveId] = useState(false);
   const [firstLand, setFirstLand] = useState(true);
   const [audioQueue, setAudioQueue] = useState([]);
+  const [openMic, setOpenMic] = useState(true);
 
   const handleAudioQueue = async () => {
     console.log(' first land', firstLand);
@@ -147,6 +148,7 @@ const Messages = ({participants, messagesId, userUid}) => {
     setpressed(false);
     stop();
   };
+  console.log('mic', openMic);
   return (
     <View style={styles.container}>
       <FlatList
@@ -154,16 +156,22 @@ const Messages = ({participants, messagesId, userUid}) => {
         data={participants}
         numColumns={2}
         renderItem={({item}) => (
-          <ConversationUser item={item} active={activeId} />
+          <ConversationUser
+            conversationId={conversationId}
+            setOpenMic={setOpenMic}
+            item={item}
+            active={activeId}
+          />
         )}
         keyExtractor={item => item.userUid}
       />
       <Pressable
         style={[styles.micButton, pressed && styles.micButtonPressed]}
         onPressIn={() => record()}
-        onPressOut={() => lacher()}>
+        onPressOut={() => lacher()}
+        disabled={!openMic}>
         <Ionicons
-          name="mic"
+          name={openMic ? 'mic' : 'mic-off'}
           size={width * 0.15}
           color={pressed ? colors.secondary : colors.black}
         />
