@@ -34,7 +34,8 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    getConversations();
+    const a = getConversations();
+    return a;
   }, []);
   return (
     <View style={styles.container}>

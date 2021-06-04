@@ -10,7 +10,7 @@ const HomeHeader = () => {
   return (
     <View style={styles.container}>
       <Pressable>
-        <Text style={styles.headerTitle}>MaleksAPP</Text>
+        <Text style={styles.headerTitle}>AudioStory</Text>
       </Pressable>
       <View style={{flexDirection: 'row'}}>
         <Pressable
