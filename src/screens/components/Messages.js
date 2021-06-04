@@ -18,7 +18,13 @@ import {colors} from '../../assets';
 import ConversationUser from './ConversationUser';
 import firestore from '@react-native-firebase/firestore';
 
-const Messages = ({participants, messagesId, userUid, conversationId}) => {
+const Messages = ({
+  participants,
+  messagesId,
+  userUid,
+  conversationId,
+  moderator,
+}) => {
   const [recording, setRecording] = useState(false);
   const [pressed, setpressed] = useState(false);
   const [activeId, setActiveId] = useState(false);
@@ -161,6 +167,7 @@ const Messages = ({participants, messagesId, userUid, conversationId}) => {
             setOpenMic={setOpenMic}
             item={item}
             active={activeId}
+            moderator={moderator}
           />
         )}
         keyExtractor={item => item.userUid}

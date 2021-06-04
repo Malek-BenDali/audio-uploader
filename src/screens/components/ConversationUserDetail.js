@@ -12,7 +12,13 @@ import {colors} from '../../assets';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import firestore from '@react-native-firebase/firestore';
 
-const ConversationUserDetail = ({item, conversationId, setOpenMic}) => {
+const ConversationUserDetail = ({
+  item,
+  conversationId,
+  setOpenMic,
+  moderator,
+}) => {
+  console.log('moderator', moderator);
   const mute = async () => {
     try {
       await firestore()
@@ -71,6 +77,27 @@ const ConversationUserDetail = ({item, conversationId, setOpenMic}) => {
       console.log('error muting', err);
     }
   };
+
+  const kick = async () => {
+    await firestore()
+      .collection('Conversation')
+      .doc(conversationId)
+      .update({
+        participants: firestore.FieldValue.arrayRemove({
+          userUid: item.userUid,
+          photoURL: item.photoURL,
+          name: item.name,
+          openMic: item.openMic,
+        }),
+      });
+    await firestore()
+      .collection('Users')
+      .doc(item.userUid)
+      .update({
+        conversation: firestore.FieldValue.arrayRemove(conversationId),
+      });
+  };
+
   return (
     <View
       style={{
@@ -91,24 +118,28 @@ const ConversationUserDetail = ({item, conversationId, setOpenMic}) => {
           </Text>
         </View>
       </View>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          item.openMic ? mute() : unmute();
-        }}>
-        <Ionicons
-          name={item.openMic ? 'mic-off' : 'mic'}
-          size={25}
-          color={colors.red}
-        />
-        <Text style={styles.buttonText}>
-          {item.openMic ? 'Mute' : 'Unmute'}
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-        <Ionicons name="exit-outline" size={25} color={colors.red} />
-        <Text style={styles.buttonText}>kick</Text>
-      </TouchableOpacity>
+      {moderator && (
+        <>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              item.openMic ? mute() : unmute();
+            }}>
+            <Ionicons
+              name={item.openMic ? 'mic-off' : 'mic'}
+              size={25}
+              color={colors.red}
+            />
+            <Text style={styles.buttonText}>
+              {item.openMic ? 'Mute' : 'Unmute'}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => kick()}>
+            <Ionicons name="exit-outline" size={25} color={colors.red} />
+            <Text style={styles.buttonText}>kick</Text>
+          </TouchableOpacity>
+        </>
+      )}
     </View>
   );
 };

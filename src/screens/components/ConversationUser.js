@@ -10,8 +10,15 @@ import {
 import {colors} from '../../assets';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import ConversationUserDetail from './ConversationUserDetail';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const ConversationUser = ({item, active, setOpenMic, conversationId}) => {
+const ConversationUser = ({
+  item,
+  active,
+  setOpenMic,
+  conversationId,
+  moderator,
+}) => {
   const refRBSheet = useRef();
   return (
     <Pressable
@@ -23,7 +30,9 @@ const ConversationUser = ({item, active, setOpenMic, conversationId}) => {
         }
         source={{uri: item.photoURL}}
       />
-      <Text> {item.name} </Text>
+      <Text>
+        {item.name} {!item.openMic && <Ionicons name="mic-off" size={20} />}
+      </Text>
       <RBSheet
         ref={refRBSheet}
         closeOnDragDown={true}
@@ -45,6 +54,7 @@ const ConversationUser = ({item, active, setOpenMic, conversationId}) => {
           conversationId={conversationId}
           setOpenMic={setOpenMic}
           item={item}
+          moderator={moderator === item.userUid}
         />
       </RBSheet>
     </Pressable>
@@ -56,6 +66,12 @@ export default ConversationUser;
 const {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
+  muteIcon: {
+    position: 'absolute',
+    zIndex: 999,
+    bottom: 18,
+    right: 13,
+  },
   image: {
     width: 100,
     height: 100,
