@@ -216,7 +216,7 @@ const Profile = ({navigation, route}) => {
         <View style={styles.body}>
           <View style={styles.row}>
             <Octocons name="primitive-dot" size={20} color={colors.secondary} />
-            <Text style={styles.robotoBold}> last activity : </Text>
+            <Text style={styles.robotoBold}> Last activity : </Text>
             <Text style={styles.roboto}>
               {moment(!userProfile ? lastLogin : user?.lastLogin).format(
                 'DD/MMM',
@@ -230,7 +230,7 @@ const Profile = ({navigation, route}) => {
           <Text style={[styles.roboto]}>{description}</Text>
           <View style={styles.row}>
             <Octocons name="primitive-dot" size={20} color={colors.black} />
-            <Text style={styles.robotoBold}> interestedIn : </Text>
+            <Text style={styles.robotoBold}> Interested in : </Text>
           </View>
           <Text style={[styles.roboto, styles.blue]}>
             {interestedIn?.map(tag => `#${tag} `)}

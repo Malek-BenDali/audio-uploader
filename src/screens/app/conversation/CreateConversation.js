@@ -55,7 +55,7 @@ const CreateConversation = ({navigation}) => {
         participants: [],
         image: uri,
         title: data.title,
-        createdAd: Date.now(),
+        createdAd: firestore.FieldValue.serverTimestamp(),
         about: data.about,
         description: data.description,
         tags: tags,

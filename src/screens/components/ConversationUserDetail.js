@@ -118,7 +118,7 @@ const ConversationUserDetail = ({
           </Text>
         </View>
       </View>
-      {moderator && (
+      {!moderator && (
         <>
           <TouchableOpacity
             style={styles.button}
