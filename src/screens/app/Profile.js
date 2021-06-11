@@ -49,13 +49,6 @@ const Profile = ({navigation, route}) => {
           <>
             <HeaderButtons HeaderButtonComponent={HeaderButton}>
               <Item
-                title="chatbubbles"
-                iconName="chatbubbles"
-                onPress={() => {}}
-              />
-            </HeaderButtons>
-            <HeaderButtons HeaderButtonComponent={HeaderButton}>
-              <Item
                 title="settings"
                 iconName="settings"
                 onPress={() => {
