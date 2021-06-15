@@ -71,7 +71,7 @@ const Profile = ({navigation, route}) => {
   const FollowButton = () => {
     return checkFollow() ? (
       <TouchableOpacity
-        style={[styles.followButton]}
+        style={[styles.followButton, {backgroundColor: colors.secondary}]}
         onPress={() =>
           dispatch(
             updateFollowing({
@@ -88,11 +88,13 @@ const Profile = ({navigation, route}) => {
             }),
           )
         }>
-        <Text style={{color: colors.secondary}}>'Follow'</Text>
+        <Text style={{color: colors.white, fontSize: 20, fontWeight: 'bold'}}>
+          Follow
+        </Text>
       </TouchableOpacity>
     ) : (
       <TouchableOpacity
-        style={[styles.followButton]}
+        style={[styles.followButton, {backgroundColor: colors.tertiary}]}
         onPress={() =>
           dispatch(
             deleteFollower({
@@ -109,7 +111,9 @@ const Profile = ({navigation, route}) => {
             }),
           )
         }>
-        <Text style={{color: colors.secondary}}>Unfollow</Text>
+        <Text style={{color: colors.white, fontSize: 20, fontWeight: 'bold'}}>
+          Unfollow
+        </Text>
       </TouchableOpacity>
     );
   };
@@ -327,7 +331,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    height: 22,
+    height: 30,
     marginBottom: 20,
     marginHorizontal: 10,
     borderRadius: 5,

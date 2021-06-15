@@ -29,6 +29,7 @@ const Search = ({navigation}) => {
         querySearch.push(_data);
       });
       setInitialResults(querySearch);
+      setResults(querySearch);
     } catch (err) {
       console.log(err);
     }
