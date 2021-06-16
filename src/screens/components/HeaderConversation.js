@@ -105,6 +105,126 @@ const HeaderConversation = ({addMember, data}) => {
               {` ${moment(createdAd).format('DD MMM YYYY')}`}
             </Animatable.Text>
           </View>
+          <View style={[styles.displayText, styles.column]}>
+            <Animatable.Text
+              animation="bounceIn"
+              style={[styles.info, styles.robotoBold]}>
+              Description :
+            </Animatable.Text>
+            <Animatable.Text style={styles.info} delay={500} animation="fadeIn">
+              {` ${description}`}
+            </Animatable.Text>
+          </View>
+          <View style={styles.displayText}>
+            <Animatable.Text
+              animation="bounceIn"
+              style={[styles.info, styles.robotoBold]}>
+              Created At :
+            </Animatable.Text>
+            <Animatable.Text style={styles.info} delay={500} animation="fadeIn">
+              {` ${moment(createdAd).format('DD MMM YYYY')}`}
+            </Animatable.Text>
+          </View>
+          <View style={[styles.displayText, styles.column]}>
+            <Animatable.Text
+              animation="bounceIn"
+              style={[styles.info, styles.robotoBold]}>
+              Description :
+            </Animatable.Text>
+            <Animatable.Text style={styles.info} delay={500} animation="fadeIn">
+              {` ${description}`}
+            </Animatable.Text>
+          </View>
+          <View style={styles.displayText}>
+            <Animatable.Text
+              animation="bounceIn"
+              style={[styles.info, styles.robotoBold]}>
+              Created At :
+            </Animatable.Text>
+            <Animatable.Text style={styles.info} delay={500} animation="fadeIn">
+              {` ${moment(createdAd).format('DD MMM YYYY')}`}
+            </Animatable.Text>
+          </View>
+          <View style={[styles.displayText, styles.column]}>
+            <Animatable.Text
+              animation="bounceIn"
+              style={[styles.info, styles.robotoBold]}>
+              Description :
+            </Animatable.Text>
+            <Animatable.Text style={styles.info} delay={500} animation="fadeIn">
+              {` ${description}`}
+            </Animatable.Text>
+          </View>
+          <View style={styles.displayText}>
+            <Animatable.Text
+              animation="bounceIn"
+              style={[styles.info, styles.robotoBold]}>
+              Created At :
+            </Animatable.Text>
+            <Animatable.Text style={styles.info} delay={500} animation="fadeIn">
+              {` ${moment(createdAd).format('DD MMM YYYY')}`}
+            </Animatable.Text>
+          </View>
+          <View style={[styles.displayText, styles.column]}>
+            <Animatable.Text
+              animation="bounceIn"
+              style={[styles.info, styles.robotoBold]}>
+              Description :
+            </Animatable.Text>
+            <Animatable.Text style={styles.info} delay={500} animation="fadeIn">
+              {` ${description}`}
+            </Animatable.Text>
+          </View>
+          <View style={styles.displayText}>
+            <Animatable.Text
+              animation="bounceIn"
+              style={[styles.info, styles.robotoBold]}>
+              Created At :
+            </Animatable.Text>
+            <Animatable.Text style={styles.info} delay={500} animation="fadeIn">
+              {` ${moment(createdAd).format('DD MMM YYYY')}`}
+            </Animatable.Text>
+          </View>
+          <View style={[styles.displayText, styles.column]}>
+            <Animatable.Text
+              animation="bounceIn"
+              style={[styles.info, styles.robotoBold]}>
+              Description :
+            </Animatable.Text>
+            <Animatable.Text style={styles.info} delay={500} animation="fadeIn">
+              {` ${description}`}
+            </Animatable.Text>
+          </View>
+          <View style={styles.displayText}>
+            <Animatable.Text
+              animation="bounceIn"
+              style={[styles.info, styles.robotoBold]}>
+              Created At :
+            </Animatable.Text>
+            <Animatable.Text style={styles.info} delay={500} animation="fadeIn">
+              {` ${moment(createdAd).format('DD MMM YYYY')}`}
+            </Animatable.Text>
+          </View>
+          <View style={[styles.displayText, styles.column]}>
+            <Animatable.Text
+              animation="bounceIn"
+              style={[styles.info, styles.robotoBold]}>
+              Description :
+            </Animatable.Text>
+            <Animatable.Text style={styles.info} delay={500} animation="fadeIn">
+              {` ${description}`}
+            </Animatable.Text>
+          </View>
+          <View style={styles.displayText}>
+            <Animatable.Text
+              animation="bounceIn"
+              style={[styles.info, styles.robotoBold]}>
+              Created At :
+            </Animatable.Text>
+            <Animatable.Text style={styles.info} delay={500} animation="fadeIn">
+              {` ${moment(createdAd).format('DD MMM YYYY')}`}
+            </Animatable.Text>
+          </View>
           <View style={styles.displayText}>
             <Animatable.Text
               animation="bounceIn"
