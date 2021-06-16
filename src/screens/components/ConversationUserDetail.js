@@ -119,26 +119,10 @@ const ConversationUserDetail = ({
         </View>
       </View>
       {!moderator && (
-        <>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              item.openMic ? mute() : unmute();
-            }}>
-            <Ionicons
-              name={item.openMic ? 'mic-off' : 'mic'}
-              size={25}
-              color={colors.red}
-            />
-            <Text style={styles.buttonText}>
-              {item.openMic ? 'Mute' : 'Unmute'}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => kick()}>
-            <Ionicons name="exit-outline" size={25} color={colors.red} />
-            <Text style={styles.buttonText}>kick</Text>
-          </TouchableOpacity>
-        </>
+        <TouchableOpacity style={styles.button} onPress={() => kick()}>
+          <Ionicons name="exit-outline" size={25} color={colors.red} />
+          <Text style={styles.buttonText}>kick</Text>
+        </TouchableOpacity>
       )}
     </View>
   );

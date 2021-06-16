@@ -102,7 +102,7 @@ const HeaderConversation = ({addMember, data}) => {
               Created At :
             </Animatable.Text>
             <Animatable.Text style={styles.info} delay={500} animation="fadeIn">
-              {` ${moment(createdAd).format('DD/MMM/YYYY')}`}
+              {` ${moment(createdAd).format('DD MMM YYYY')}`}
             </Animatable.Text>
           </View>
           <View style={styles.displayText}>
