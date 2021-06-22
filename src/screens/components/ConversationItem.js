@@ -24,6 +24,158 @@ const ConversationItem = ({item}) => {
           <Text style={[styles.title, styles.robotoBold]}>{item.title} </Text>
           <Text>about {item.about}</Text>
           <Text>
+      <ImageBackground
+        source={{uri: item.image}}
+        style={styles.imageBackground}>
+        <View style={styles.photo}></View>
+        <View style={styles.mainContent}>
+          <Text style={[styles.title, styles.robotoBold]}>{item.title} </Text>
+          <Text>about {item.about}</Text>
+          <Text>
+      <ImageBackground
+        source={{uri: item.image}}
+        style={styles.imageBackground}>
+        <View style={styles.photo}></View>
+        <View style={styles.mainContent}>
+          <Text style={[styles.title, styles.robotoBold]}>{item.title} </Text>
+          <Text>about {item.about}</Text>
+          <Text>
+      <ImageBackground
+        source={{uri: item.image}}
+        style={styles.imageBackground}>
+        <View style={styles.photo}></View>
+        <View style={styles.mainContent}>
+          <Text style={[styles.title, styles.robotoBold]}>{item.title} </Text>
+          <Text>about {item.about}</Text>
+          <Text>
+      <ImageBackground
+        source={{uri: item.image}}
+        style={styles.imageBackground}>
+        <View style={styles.photo}></View>
+        <View style={styles.mainContent}>
+          <Text style={[styles.title, styles.robotoBold]}>{item.title} </Text>
+          <Text>about {item.about}</Text>
+          <Text>
+      <ImageBackground
+        source={{uri: item.image}}
+        style={styles.imageBackground}>
+        <View style={styles.photo}></View>
+        <View style={styles.mainContent}>
+          <Text style={[styles.title, styles.robotoBold]}>{item.title} </Text>
+          <Text>about {item.about}</Text>
+          <Text>
+      <ImageBackground
+        source={{uri: item.image}}
+        style={styles.imageBackground}>
+        <View style={styles.photo}></View>
+        <View style={styles.mainContent}>
+          <Text style={[styles.title, styles.robotoBold]}>{item.title} </Text>
+          <Text>about {item.about}</Text>
+          <Text>
+      <ImageBackground
+        source={{uri: item.image}}
+        style={styles.imageBackground}>
+        <View style={styles.photo}></View>
+        <View style={styles.mainContent}>
+          <Text style={[styles.title, styles.robotoBold]}>{item.title} </Text>
+          <Text>about {item.about}</Text>
+          <Text>
+      <ImageBackground
+        source={{uri: item.image}}
+        style={styles.imageBackground}>
+        <View style={styles.photo}></View>
+        <View style={styles.mainContent}>
+          <Text style={[styles.title, styles.robotoBold]}>{item.title} </Text>
+          <Text>about {item.about}</Text>
+          <Text>
+      <ImageBackground
+        source={{uri: item.image}}
+        style={styles.imageBackground}>
+        <View style={styles.photo}></View>
+        <View style={styles.mainContent}>
+          <Text style={[styles.title, styles.robotoBold]}>{item.title} </Text>
+          <Text>about {item.about}</Text>
+          <Text>
+      <ImageBackground
+        source={{uri: item.image}}
+        style={styles.imageBackground}>
+        <View style={styles.photo}></View>
+        <View style={styles.mainContent}>
+          <Text style={[styles.title, styles.robotoBold]}>{item.title} </Text>
+          <Text>about {item.about}</Text>
+          <Text>
+      <ImageBackground
+        source={{uri: item.image}}
+        style={styles.imageBackground}>
+        <View style={styles.photo}></View>
+        <View style={styles.mainContent}>
+          <Text style={[styles.title, styles.robotoBold]}>{item.title} </Text>
+          <Text>about {item.about}</Text>
+          <Text>
+      <ImageBackground
+        source={{uri: item.image}}
+        style={styles.imageBackground}>
+        <View style={styles.photo}></View>
+        <View style={styles.mainContent}>
+          <Text style={[styles.title, styles.robotoBold]}>{item.title} </Text>
+          <Text>about {item.about}</Text>
+          <Text>
+      <ImageBackground
+        source={{uri: item.image}}
+        style={styles.imageBackground}>
+        <View style={styles.photo}></View>
+        <View style={styles.mainContent}>
+          <Text style={[styles.title, styles.robotoBold]}>{item.title} </Text>
+          <Text>about {item.about}</Text>
+          <Text>
+      <ImageBackground
+        source={{uri: item.image}}
+        style={styles.imageBackground}>
+        <View style={styles.photo}></View>
+        <View style={styles.mainContent}>
+          <Text style={[styles.title, styles.robotoBold]}>{item.title} </Text>
+          <Text>about {item.about}</Text>
+          <Text>
+      <ImageBackground
+        source={{uri: item.image}}
+        style={styles.imageBackground}>
+        <View style={styles.photo}></View>
+        <View style={styles.mainContent}>
+          <Text style={[styles.title, styles.robotoBold]}>{item.title} </Text>
+          <Text>about {item.about}</Text>
+          <Text>
+      <ImageBackground
+        source={{uri: item.image}}
+        style={styles.imageBackground}>
+        <View style={styles.photo}></View>
+        <View style={styles.mainContent}>
+          <Text style={[styles.title, styles.robotoBold]}>{item.title} </Text>
+          <Text>about {item.about}</Text>
+          <Text>
+      <ImageBackground
+        source={{uri: item.image}}
+        style={styles.imageBackground}>
+        <View style={styles.photo}></View>
+        <View style={styles.mainContent}>
+          <Text style={[styles.title, styles.robotoBold]}>{item.title} </Text>
+          <Text>about {item.about}</Text>
+          <Text>
+      <ImageBackground
+        source={{uri: item.image}}
+        style={styles.imageBackground}>
+        <View style={styles.photo}></View>
+        <View style={styles.mainContent}>
+          <Text style={[styles.title, styles.robotoBold]}>{item.title} </Text>
+          <Text>about {item.about}</Text>
+          <Text>
+      <ImageBackground
+        source={{uri: item.image}}
+        style={styles.imageBackground}>
+        <View style={styles.photo}></View>
+        <View style={styles.mainContent}>
+          <Text style={[styles.title, styles.robotoBold]}>{item.title} </Text>
+          <Text>about {item.about}</Text>
+          <Text>
             <Text style={styles.robotoBold}> {item.participants.length} </Text>
             participants
           </Text>
