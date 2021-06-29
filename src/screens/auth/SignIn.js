@@ -14,6 +14,7 @@ import {
 const SignIn = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   function onAuthStateChanged(user) {
     dispatch(signIn(user));
@@ -43,16 +44,23 @@ const SignIn = () => {
         {loading ? (
           <ActivityIndicator size="large" color={colors.blue} />
         ) : (
-          <GoogleSigninButton
-            style={{width: 192, height: 55}}
-            size={GoogleSigninButton.Size.Wide}
-            color={GoogleSigninButton.Color.Dark}
-            onPress={async () => {
-              handleGoogleSignIn().catch(err => console.log(err));
-              setLoading(true);
-            }}
-            // disabled={this.state.isSigninInProgress}
-          />
+          <>
+            <GoogleSigninButton
+              style={{width: 192, height: 55}}
+              size={GoogleSigninButton.Size.Wide}
+              color={GoogleSigninButton.Color.Dark}
+              onPress={async () => {
+                handleGoogleSignIn().catch(err => console.log(err));
+                setLoading(true);
+                setTimeout(() => {
+                  setLoading(false);
+                  setErrorMessage('Something went wrong');
+                }, 10000);
+              }}
+              // disabled={this.state.isSigninInProgress}
+            />
+            <Text style={{alignSelf: 'center'}}> {errorMessage} </Text>
+          </>
         )}
       </View>
     </View>

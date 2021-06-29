@@ -34,9 +34,14 @@ const Search = ({navigation}) => {
       console.log(err);
     }
   }, []);
+  const a = 'raer';
   const handleChange = text => {
     setSearchedText(text);
-    setResults(initialResults.filter(word => word.name.includes(text)));
+    setResults(
+      initialResults.filter(word =>
+        word.name.toLocaleLowerCase().includes(text.toLocaleLowerCase()),
+      ),
+    );
   };
   return (
     <View style={styles.container}>

@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   status: {
     position: 'absolute',
     right: 15,
-    bottom: 5,
+    bottom: 0,
     color: colors.black,
   },
 });
